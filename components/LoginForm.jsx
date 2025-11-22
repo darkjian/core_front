@@ -1,16 +1,18 @@
 // components/LoginForm.js
 'use client';
 
+import { login } from '@/services/auth';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
-import { login } from '../services/auth';
 
 export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const searchParams = useSearchParams();
+    const fromUrl = searchParams.get('from');
     const router = useRouter();
 
     const handleSubmit = async (e) => {
@@ -29,7 +31,8 @@ export default function LoginForm() {
 
         try {
             await login({ email: trimmedEmail, password: trimmedPassword });
-            router.push('/');
+            const redirectTo = fromUrl?.startsWith('/dashboard') ? fromUrl : '/dashboard';
+            router.push(redirectTo);
         } catch (err) {
             setError(err.message || 'Ошибка входа');
         } finally {

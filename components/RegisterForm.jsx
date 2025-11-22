@@ -1,7 +1,7 @@
 'use client';
+import { register } from "@/services/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { register } from "../services/auth";
 
 export default function RegisterForm() {
     const [email, setEmail] = useState('');
