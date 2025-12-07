@@ -1,3 +1,6 @@
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50 flex items-center">
@@ -6,22 +9,11 @@ export default function Home() {
           <section className="text-center">
             <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl lg:text-6xl">Заголовок</h1>
             <p className="mt-4 text-lg text-gray-600 sm:text-xl lg:text-2xl">Быстро, красиво, без лишних библиотек</p>
-            <a className="
-              mt-8
-              text-white
-              inline-block
-              rounded-lg
-              bg-indigo-600
-              px-6 py-3
-              shadow-md
-              hover:bg-indigo-700
-              focus:outline-none focus:ring-2 
-              focus:ring-indigo-500 focus:ring-offset-2
-              sm:px-8 sm:py-4 sm:text-lg
-            "
-              href="/auth/login">
-              Начать сейчас
-            </a>
+            <Button asChild size="lg" className="mt-8 bg-indigo-600 hover:bg-indigo-700">
+              <Link href="/auth/login">
+                Начать сейчас
+              </Link>
+            </Button>
           </section>
         </div>
       </div>
