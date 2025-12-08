@@ -1,4 +1,4 @@
-import { apiFetch } from "../lib/api";
+import { apiFetch } from "@/lib/api";
 
 export async function login(credentials) {
     return apiFetch('/api/v1/auth/login', {
