@@ -1,21 +1,11 @@
-import { apiFetch } from "@/lib/api";
+import apiClient from "@/lib/api";
 
 export async function listUserPrograms() {
-    return apiFetch('/api/v1/programs', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-    });
+    const response = await apiClient.get('/api/v1/programs');
+    return response.data;
 }
 
 export async function listTemplatePrograms() {
-    return apiFetch('/api/v1/programs/templates', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-    });
+    const response = await apiClient.get('/api/v1/programs/templates');
+    return response.data;
 }

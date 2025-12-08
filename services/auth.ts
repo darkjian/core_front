@@ -1,15 +1,11 @@
-import { apiFetch } from "@/lib/api";
+import apiClient from "@/lib/api";
 
 export async function login(credentials) {
-    return apiFetch('/api/v1/auth/login', {
-        method: 'POST',
-        body: JSON.stringify(credentials),
-    });
+    const response = await apiClient.post('/api/v1/auth/login', credentials);
+    return response.data;
 }
 
 export async function register(credentials) {
-    return apiFetch('/api/v1/auth/register', {
-        method: 'POST',
-        body: JSON.stringify(credentials),
-    });
+    const response = await apiClient.post('/api/v1/auth/register', credentials);
+    return response.data;
 }
