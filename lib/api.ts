@@ -7,7 +7,7 @@ if (!API_URL) {
 }
 
 const apiClient: AxiosInstance = axios.create({
-    baseURL: API_URL,
+    baseURL: `${API_URL}/api/v1/`,
     headers: {
         'Content-Type': 'application/json',
     },

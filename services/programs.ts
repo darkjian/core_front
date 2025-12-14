@@ -12,11 +12,11 @@ interface ProgramsResponse {
 }
 
 export async function listUserPrograms(): Promise<ProgramsResponse> {
-    const response = await apiClient.get('/api/v1/programs');
+    const response = await apiClient.get('/programs');
     return response.data;
 }
 
 export async function listTemplatePrograms(): Promise<ProgramsResponse> {
-    const response = await apiClient.get('/api/v1/programs/templates');
+    const response = await apiClient.get('/programs/templates');
     return response.data;
 }
