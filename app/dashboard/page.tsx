@@ -5,7 +5,7 @@ import { useEffect, useState, FC } from "react";
 
 interface DailyWorkouts {
     workouts: Array<{
-        id: string | number;
+        id: string;
         title: string;
         day_of_week: string;
     }>;

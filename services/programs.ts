@@ -1,7 +1,7 @@
 import apiClient from "@/lib/api";
 
 interface Program {
-    id: string | number;
+    id: string;
     title: string;
     description: string;
     created_at: string | Date;

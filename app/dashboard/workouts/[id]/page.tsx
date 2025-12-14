@@ -4,12 +4,17 @@ import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState, FC } from "react";
 
 interface Exercise {
-    id: string | number;
+    id: string;
     title: string;
+    "description": string,
+    "session_parameters": {
+        "reps": number,
+        "sets": number
+    }
 }
 
 const Workouts: FC = () => {
-    const workoutId = useParams()?.id as string | number;
+    const workoutId = useParams()?.id as string;
     const workoutTitle = useSearchParams().get('workout_title');
     const [exercises, setExercises] = useState<Exercise[]>([]);
     const [error, setError] = useState<string>('');

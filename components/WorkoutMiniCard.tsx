@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { FC } from "react";
 
 interface Workout {
-    id: string | number;
+    id: string;
     title: string;
     day_of_week: string;
 }

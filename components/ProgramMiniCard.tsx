@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { FC } from "react";
 
 interface Program {
-    id: string | number;
+    id: string;
     title: string;
     description: string;
     created_at: string | Date;

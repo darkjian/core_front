@@ -3,9 +3,15 @@ import { listProgramWorkouts } from '@/services/workouts';
 import { useParams } from 'next/navigation';
 import { useEffect, useState, FC } from 'react';
 
+interface Workout {
+    id: string;
+    title: string;
+    day_of_week: string;
+}
+
 interface ProgramData {
     program_name: string;
-    workouts: Array<unknown>;
+    workouts: Workout[];
 }
 
 const dayOrder: string[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
@@ -23,7 +29,7 @@ const ProgramPage: FC = () => {
     const params = useParams();   // теперь params обычный объект, await не нужен
     const [data, setData] = useState<ProgramData | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const id = params?.id as string | number;
+    const id = params?.id as string;
     useEffect(() => {
 
         async function fetchWorkouts() {

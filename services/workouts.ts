@@ -1,14 +1,19 @@
 import apiClient from "@/lib/api";
 
 interface Workout {
-    id: string | number;
+    id: string;
     title: string;
     day_of_week: string;
 }
 
 interface Exercise {
-    id: string | number;
+    id: string;
     title: string;
+    description: string;
+    session_parameters: {
+        reps: number;
+        sets: number;
+    };
 }
 
 interface ProgramWorkoutsResponse {
@@ -21,7 +26,7 @@ interface DailyWorkoutsResponse {
     workouts: Workout[];
 }
 
-export async function listProgramWorkouts(id: string | number): Promise<ProgramWorkoutsResponse> {
+export async function listProgramWorkouts(id: string): Promise<ProgramWorkoutsResponse> {
     const response = await apiClient.get(`/programs/${id}/workouts?limit=10`);
     return response.data;
 }
@@ -31,7 +36,7 @@ export async function listDailyWorkouts(): Promise<DailyWorkoutsResponse> {
     return response.data;
 }
 
-export async function listWorkoutExercises(id: string | number): Promise<Exercise[]> {
+export async function listWorkoutExercises(id: string): Promise<Exercise[]> {
     const response = await apiClient.get(`/workouts/${id}/exercises`);
     return response.data;
 }
