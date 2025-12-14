@@ -27,7 +27,7 @@ export const handleErrorByStatus = (error: AxiosError<ServerErrorResponse>): voi
             console.error(`🔴 [400 Bad Request] ${method} ${url}`, errorLog);
             break;
         case 401:
-            console.error(`🔴 [401 Unauthorized] ${method} ${url}`, errorLog);
+            window.location.replace('auth/login');
             break;
         case 403:
             console.error(`🔴 [403 Forbidden] ${method} ${url}`, errorLog);
