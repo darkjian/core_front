@@ -14,6 +14,11 @@ const apiClient: AxiosInstance = axios.create({
     withCredentials: true,
 });
 
+apiClient.interceptors.request.use((config) => {
+    config.headers['X-Request-Id'] = crypto.randomUUID();
+    return config;
+});
+
 apiClient.interceptors.response.use(
     (response: AxiosResponse) => response,
     (error: AxiosError | Error) => {
