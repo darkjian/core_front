@@ -1,30 +1,5 @@
 import apiClient from "@/lib/api";
-
-interface Workout {
-    id: string;
-    title: string;
-    day_of_week: string;
-}
-
-interface Exercise {
-    id: string;
-    title: string;
-    description: string;
-    session_parameters: {
-        reps: number;
-        sets: number;
-    };
-}
-
-interface ProgramWorkoutsResponse {
-    program_name: string;
-    workouts: Workout[];
-}
-
-interface DailyWorkoutsResponse {
-    program_name: string;
-    workouts: Workout[];
-}
+import type {  Exercise, ProgramWorkoutsResponse, DailyWorkoutsResponse } from "@/types";
 
 export async function listProgramWorkouts(id: string): Promise<ProgramWorkoutsResponse> {
     const response = await apiClient.get(`/programs/${id}/workouts?limit=10`);

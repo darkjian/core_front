@@ -2,14 +2,8 @@
 
 import ProgramMiniCard from "@/components/ProgramMiniCard";
 import { listTemplatePrograms, listUserPrograms } from "@/services/programs";
+import type { Program } from "@/types";
 import { useEffect, useState, FC, ReactNode } from "react";
-
-interface Program {
-    id: string;
-    title: string;
-    description: string;
-    created_at: string | Date;
-}
 
 const listPrograms = (programs: Program[]): ReactNode[] => {
     return programs.map((program) => (

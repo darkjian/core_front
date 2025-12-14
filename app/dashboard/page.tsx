@@ -1,16 +1,8 @@
 'use client';
 import WorkoutMiniCard from "@/components/WorkoutMiniCard";
 import { listDailyWorkouts } from "@/services/workouts";
+import type { DailyWorkoutsResponse } from "@/types";
 import { useEffect, useState, FC } from "react";
-
-interface DailyWorkouts {
-    workouts: Array<{
-        id: string;
-        title: string;
-        day_of_week: string;
-    }>;
-    program_name: string;
-}
 
 function getCurrentDayOfWeek(): string {
     const date = new Date();
@@ -30,7 +22,7 @@ const dayOfWeekOrder: Record<string, number> = {
 };
 
 const DashboardHome: FC = () => {
-    const [workouts, setWorkouts] = useState<DailyWorkouts | null>(null);
+    const [workouts, setWorkouts] = useState<DailyWorkoutsResponse | null>(null);
     const [error, setError] = useState<string>('');
     const currenWeekday = getCurrentDayOfWeek();
 

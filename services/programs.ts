@@ -1,15 +1,5 @@
 import apiClient from "@/lib/api";
-
-interface Program {
-    id: string;
-    title: string;
-    description: string;
-    created_at: string | Date;
-}
-
-interface ProgramsResponse {
-    programs: Program[];
-}
+import type { ProgramsResponse } from "@/types";
 
 export async function listUserPrograms(): Promise<ProgramsResponse> {
     const response = await apiClient.get('/programs');

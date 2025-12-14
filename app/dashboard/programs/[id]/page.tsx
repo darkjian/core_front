@@ -1,18 +1,8 @@
 'use client';
 import { listProgramWorkouts } from '@/services/workouts';
+import type { ProgramData } from '@/types';
 import { useParams } from 'next/navigation';
 import { useEffect, useState, FC } from 'react';
-
-interface Workout {
-    id: string;
-    title: string;
-    day_of_week: string;
-}
-
-interface ProgramData {
-    program_name: string;
-    workouts: Workout[];
-}
 
 const dayOrder: string[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 const dayNamesRu: Record<string, string> = {

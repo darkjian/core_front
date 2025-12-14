@@ -1,11 +1,6 @@
 import Link from "next/link";
 import type { FC } from "react";
-
-interface Workout {
-    id: string;
-    title: string;
-    day_of_week: string;
-}
+import type { Workout } from "@/types";
 
 interface WorkoutMiniCardProps {
     workout: Workout;

@@ -1,17 +1,8 @@
 'use client';
 import { listWorkoutExercises } from "@/services/workouts";
+import type { Exercise } from "@/types";
 import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState, FC } from "react";
-
-interface Exercise {
-    id: string;
-    title: string;
-    "description": string,
-    "session_parameters": {
-        "reps": number,
-        "sets": number
-    }
-}
 
 const Workouts: FC = () => {
     const workoutId = useParams()?.id as string;
