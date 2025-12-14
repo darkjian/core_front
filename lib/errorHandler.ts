@@ -1,12 +1,17 @@
 import { AxiosError } from 'axios';
 
+interface ServerErrorResponse {
+    error?: string;
+    [key: string]: unknown;
+}
+
 interface ErrorLog {
     message: string;
     data?: unknown;
     retryAfter?: string;
 }
 
-export const handleErrorByStatus = (error: AxiosError): void => {
+export const handleErrorByStatus = (error: AxiosError<ServerErrorResponse>): void => {
     const status = error.response?.status;
     const errorMessage = error.response?.data?.error || error.message || 'Network error';
     const method = error.config?.method?.toUpperCase();
