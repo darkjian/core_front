@@ -2,19 +2,26 @@
 
 import ProgramMiniCard from "@/components/ProgramMiniCard";
 import { listTemplatePrograms, listUserPrograms } from "@/services/programs";
-import { useEffect, useState } from "react";
+import { useEffect, useState, FC, ReactNode } from "react";
 
-const listPrograms = (programs) => {
+interface Program {
+    id: string | number;
+    title: string;
+    description: string;
+    created_at: string | Date;
+}
+
+const listPrograms = (programs: Program[]): ReactNode[] => {
     return programs.map((program) => (
         <ProgramMiniCard key={program.id} program={program} />
     ))
 }
 
-export default function Programs() {
-    const [programs, setPrograms] = useState([]);
-    const [templates, setTemplates] = useState([]);
-    const [error, setError] = useState('');
-    const [viewMode, setViewMode] = useState('my');
+const Programs: FC = () => {
+    const [programs, setPrograms] = useState<Program[]>([]);
+    const [templates, setTemplates] = useState<Program[]>([]);
+    const [error, setError] = useState<string>('');
+    const [viewMode, setViewMode] = useState<'my' | 'templates'>('my');
 
     useEffect(() => {
         async function fetchPrograms() {
@@ -78,3 +85,5 @@ export default function Programs() {
         </>
     );
 }
+
+export default Programs;

@@ -1,6 +1,9 @@
 import "./globals.css";
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
+
 // сделай картинку public/og-image.jpg (1200×630)
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Продающий Landing | Ваш Бренд',
   description: 'Быстро, красиво, без лишних библиотек. Создаём современные UI на Tailwind CSS.',
   keywords: 'tailwind css, next.js, landing page, ui design, go backend',
@@ -33,7 +36,11 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+interface RootLayoutProps {
+  children: ReactNode;
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ru">
       <body className="antialiased">

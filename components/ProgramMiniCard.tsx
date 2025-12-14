@@ -1,9 +1,31 @@
 import Link from "next/link";
+import type { FC } from "react";
 
-export default function ProgramMiniCard({ program }) {
+interface Program {
+    id: string | number;
+    title: string;
+    description: string;
+    created_at: string | Date;
+}
+
+interface ProgramMiniCardProps {
+    program: Program;
+}
+
+const formatDate = (date: string | Date): string => {
+    return new Date(date).toLocaleDateString(
+        'ru-RU',
+        {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+        })
+}
+
+const ProgramMiniCard: FC<ProgramMiniCardProps> = ({ program }) => {
     return (
-        <Link className="group flex flex-col bg-white p-3 
-            drop-shadow-lg rounded-xl  
+        <Link className="group flex flex-col bg-white p-3
+            drop-shadow-lg rounded-xl
             hover:bg-indigo-50
             min-w-xs
             transition-color duration-300
@@ -18,12 +40,4 @@ export default function ProgramMiniCard({ program }) {
     );
 };
 
-const formatDate = (date) => {
-    return new Date(date).toLocaleDateString(
-        'ru-RU',
-        {
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric'
-        })
-}
+export default ProgramMiniCard;

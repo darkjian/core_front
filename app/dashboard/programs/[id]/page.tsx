@@ -1,10 +1,15 @@
 'use client';
 import { listProgramWorkouts } from '@/services/workouts';
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FC } from 'react';
 
-const dayOrder = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-const dayNamesRu = {
+interface ProgramData {
+    program_name: string;
+    workouts: Array<any>;
+}
+
+const dayOrder: string[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+const dayNamesRu: Record<string, string> = {
     monday: 'Понедельник',
     tuesday: 'Вторник',
     wednesday: 'Среда',
@@ -14,11 +19,11 @@ const dayNamesRu = {
     sunday: 'Воскресенье',
 };
 
-export default function ProgramPage() {
+const ProgramPage: FC = () => {
     const params = useParams();   // теперь params обычный объект, await не нужен
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const id = params.id;
+    const [data, setData] = useState<ProgramData | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const id = params?.id as string | number;
     useEffect(() => {
 
         async function fetchWorkouts() {
@@ -49,3 +54,5 @@ export default function ProgramPage() {
     )
 
 }
+
+export default ProgramPage;

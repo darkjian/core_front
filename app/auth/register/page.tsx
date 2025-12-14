@@ -1,7 +1,10 @@
 import RegisterForm from "@/components/RegisterForm";
+import type { FC } from "react";
 
-export default function Register() {
+const Register: FC = () => {
     return (
-        < RegisterForm />
+        <RegisterForm />
     );
 }
+
+export default Register;

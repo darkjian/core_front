@@ -1,13 +1,18 @@
 'use client';
 import { listWorkoutExercises } from "@/services/workouts";
 import { useParams, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
 
-export default function Workouts() {
-    const workoutId = useParams().id;
+interface Exercise {
+    id: string | number;
+    title: string;
+}
+
+const Workouts: FC = () => {
+    const workoutId = useParams()?.id as string | number;
     const workoutTitle = useSearchParams().get('workout_title');
-    const [exercises, setExercises] = useState([]);
-    const [error, setError] = useState('');
+    const [exercises, setExercises] = useState<Exercise[]>([]);
+    const [error, setError] = useState<string>('');
 
     useEffect(() => {
 
@@ -17,7 +22,7 @@ export default function Workouts() {
                 setExercises(data);
             }
             catch (error) {
-                setError(error)
+                setError(error as string)
                 console.log('fetching workout exercises:', error);
             }
         }
@@ -63,3 +68,5 @@ export default function Workouts() {
         </>
     )
 }
+
+export default Workouts;
