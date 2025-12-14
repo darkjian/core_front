@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
+import { handleErrorByStatus } from './errorHandler';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -23,6 +24,7 @@ apiClient.interceptors.response.use(
     (response: AxiosResponse) => response,
     (error: AxiosError | Error) => {
         if (axios.isAxiosError(error)) {
+            handleErrorByStatus(error);
             const errorMessage = error.response?.data?.error || error.message || 'Network error';
             return Promise.reject(new Error(errorMessage as string));
         }
