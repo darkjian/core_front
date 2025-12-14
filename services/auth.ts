@@ -1,11 +1,12 @@
 import apiClient from "@/lib/api";
+import type { Credentials, AuthResponse } from "@/types";
 
-export async function login(credentials) {
-    const response = await apiClient.post('/api/v1/auth/login', credentials);
+export async function login(credentials: Credentials): Promise<AuthResponse> {
+    const response = await apiClient.post('/auth/login', credentials);
     return response.data;
 }
 
-export async function register(credentials) {
-    const response = await apiClient.post('/api/v1/auth/register', credentials);
+export async function register(credentials: Credentials): Promise<AuthResponse> {
+    const response = await apiClient.post('/auth/register', credentials);
     return response.data;
 }

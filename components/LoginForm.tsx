@@ -4,18 +4,18 @@
 import { login } from '@/services/auth';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useState, FC, FormEvent } from 'react';
 
-export default function LoginForm() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+const LoginForm: FC = () => {
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [error, setError] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
     const searchParams = useSearchParams();
     const fromUrl = searchParams.get('from');
     const router = useRouter();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         setError('');
         setLoading(true);
@@ -34,7 +34,8 @@ export default function LoginForm() {
             const redirectTo = fromUrl?.startsWith('/dashboard') ? fromUrl : '/dashboard';
             router.push(redirectTo);
         } catch (err) {
-            setError(err.message || 'Ошибка входа');
+            const errorMessage = err instanceof Error ? err.message : 'Ошибка входа';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -89,3 +90,5 @@ export default function LoginForm() {
         </div>
     );
 }
+
+export default LoginForm;

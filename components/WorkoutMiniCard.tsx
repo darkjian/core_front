@@ -1,6 +1,14 @@
 import Link from "next/link";
+import type { FC } from "react";
+import type { Workout } from "@/types";
 
-const daysOfWeekMap = {
+interface WorkoutMiniCardProps {
+    workout: Workout;
+    program: string;
+    isToday?: boolean;
+}
+
+const daysOfWeekMap: Record<string, number> = {
     'monday': 1,
     'tuesday': 2,
     'wednesday': 3,
@@ -9,9 +17,9 @@ const daysOfWeekMap = {
     'saturday': 6,
     'sunday': 0,
 };
-const russianDaysShort = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+const russianDaysShort: string[] = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 
-export default function WorkoutMiniCard({ workout, program, isToday }) {
+const WorkoutMiniCard: FC<WorkoutMiniCardProps> = ({ workout, program, isToday = false }) => {
     const dayIndex = daysOfWeekMap[workout.day_of_week.toLowerCase()];
     const weekday = russianDaysShort[dayIndex];
 
@@ -27,3 +35,5 @@ export default function WorkoutMiniCard({ workout, program, isToday }) {
         </Link>
     );
 };
+
+export default WorkoutMiniCard;

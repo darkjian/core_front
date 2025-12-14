@@ -4,15 +4,26 @@
 import { BicepsFlexed, Home, Settings, User } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import type { FC, ReactNode } from 'react';
 
-const navItems = [
+interface NavItem {
+    href: string;
+    name: string;
+    icon: ReactNode;
+}
+
+interface DashboardLayoutProps {
+    children: ReactNode;
+}
+
+const navItems: NavItem[] = [
     { href: '/dashboard', name: 'Home', icon: <Home className="h-5 w-5" /> },
     { href: '/dashboard/programs', name: 'Programs', icon: <BicepsFlexed className="h-5 w-5" /> },
     { href: '/dashboard/settings', name: 'Settings', icon: <Settings className="h-5 w-5" /> },
     { href: '/dashboard/profile', name: 'Profile', icon: <User className="h-5 w-5" /> },
 ];
 
-export default function DashboardLayout({ children }) {
+const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
     const pathname = usePathname();
     return (
         <>
@@ -72,3 +83,5 @@ export default function DashboardLayout({ children }) {
         </>
     );
 }
+
+export default DashboardLayout;

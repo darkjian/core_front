@@ -1,16 +1,17 @@
 import apiClient from "@/lib/api";
+import type {  Exercise, ProgramWorkoutsResponse, DailyWorkoutsResponse } from "@/types";
 
-export async function listProgramWorkouts(id) {
-    const response = await apiClient.get(`/api/v1/programs/${id}/workouts?limit=10`);
+export async function listProgramWorkouts(id: string): Promise<ProgramWorkoutsResponse> {
+    const response = await apiClient.get(`/programs/${id}/workouts?limit=10`);
     return response.data;
 }
 
-export async function listDailyWorkouts() {
-    const response = await apiClient.get(`/api/v1/workouts/today?limit=10`);
+export async function listDailyWorkouts(): Promise<DailyWorkoutsResponse> {
+    const response = await apiClient.get('/workouts/today?limit=10');
     return response.data;
 }
 
-export async function listWorkoutExercises(id) {
-    const response = await apiClient.get(`/api/v1/workouts/${id}/exercises`);
+export async function listWorkoutExercises(id: string): Promise<Exercise[]> {
+    const response = await apiClient.get(`/workouts/${id}/exercises`);
     return response.data;
 }

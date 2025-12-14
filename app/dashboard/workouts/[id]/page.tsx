@@ -1,13 +1,14 @@
 'use client';
 import { listWorkoutExercises } from "@/services/workouts";
+import type { Exercise } from "@/types";
 import { useParams, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
 
-export default function Workouts() {
-    const workoutId = useParams().id;
+const Workouts: FC = () => {
+    const workoutId = useParams()?.id as string;
     const workoutTitle = useSearchParams().get('workout_title');
-    const [exercises, setExercises] = useState([]);
-    const [error, setError] = useState('');
+    const [exercises, setExercises] = useState<Exercise[]>([]);
+    const [error, setError] = useState<string>('');
 
     useEffect(() => {
 
@@ -17,8 +18,9 @@ export default function Workouts() {
                 setExercises(data);
             }
             catch (error) {
-                setError(error)
-                console.log('fetching workout exercises:', error);
+                const errorMessage = error instanceof Error ? error.message : 'Ошибка загрузки упражнений';
+                setError(errorMessage);
+                console.error('fetching workout exercises:', error);
             }
         }
 
@@ -63,3 +65,5 @@ export default function Workouts() {
         </>
     )
 }
+
+export default Workouts;

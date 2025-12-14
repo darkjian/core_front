@@ -1,7 +1,10 @@
 'use client';
 
 import LoginForm from '@/components/LoginForm';
+import type { FC } from 'react';
 
-export default function Login() {
+const Login: FC = () => {
     return <LoginForm />
 }
+
+export default Login;

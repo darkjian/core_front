@@ -2,14 +2,24 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { FC, ReactNode } from "react";
 
-const navItems = [
+interface NavItem {
+    name: string;
+    href: string;
+}
+
+interface AuthLayoutProps {
+    children: ReactNode;
+}
+
+const navItems: NavItem[] = [
     { name: 'Главная', href: '/' },
     { name: 'Регистрация', href: '/auth/register' },
     { name: 'Логин', href: '/auth/login' },
 ];
 
-export default function AuthLayout({ children }) {
+const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
     const pathname = usePathname();
     return (
         <>
@@ -43,3 +53,5 @@ export default function AuthLayout({ children }) {
         </>
     );
 }
+
+export default AuthLayout;

@@ -1,11 +1,12 @@
 import apiClient from "@/lib/api";
+import type { ProgramsResponse } from "@/types";
 
-export async function listUserPrograms() {
-    const response = await apiClient.get('/api/v1/programs');
+export async function listUserPrograms(): Promise<ProgramsResponse> {
+    const response = await apiClient.get('/programs');
     return response.data;
 }
 
-export async function listTemplatePrograms() {
-    const response = await apiClient.get('/api/v1/programs/templates');
+export async function listTemplatePrograms(): Promise<ProgramsResponse> {
+    const response = await apiClient.get('/programs/templates');
     return response.data;
 }

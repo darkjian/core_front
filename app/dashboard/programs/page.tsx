@@ -2,19 +2,20 @@
 
 import ProgramMiniCard from "@/components/ProgramMiniCard";
 import { listTemplatePrograms, listUserPrograms } from "@/services/programs";
-import { useEffect, useState } from "react";
+import type { Program } from "@/types";
+import { useEffect, useState, FC, ReactNode } from "react";
 
-const listPrograms = (programs) => {
+const listPrograms = (programs: Program[]): ReactNode[] => {
     return programs.map((program) => (
         <ProgramMiniCard key={program.id} program={program} />
     ))
 }
 
-export default function Programs() {
-    const [programs, setPrograms] = useState([]);
-    const [templates, setTemplates] = useState([]);
-    const [error, setError] = useState('');
-    const [viewMode, setViewMode] = useState('my');
+const Programs: FC = () => {
+    const [programs, setPrograms] = useState<Program[]>([]);
+    const [templates, setTemplates] = useState<Program[]>([]);
+    const [error, setError] = useState<string>('');
+    const [viewMode, setViewMode] = useState<'my' | 'templates'>('my');
 
     useEffect(() => {
         async function fetchPrograms() {
@@ -23,8 +24,9 @@ export default function Programs() {
                 setPrograms(data.programs);
             }
             catch (err) {
-                setError(err)
-                console.log('fetching user programs:', err);
+                const errorMessage = err instanceof Error ? err.message : 'Ошибка загрузки программ';
+                setError(errorMessage);
+                console.error('fetching user programs:', err);
             }
         }
         if (viewMode === 'my') {
@@ -40,7 +42,7 @@ export default function Programs() {
                 setViewMode('templates');
             }
             catch (err) {
-                console.log('fetching template programs:', err);
+                console.error('fetching template programs:', err);
             }
         }
         if (viewMode === 'templates') {
@@ -78,3 +80,5 @@ export default function Programs() {
         </>
     );
 }
+
+export default Programs;

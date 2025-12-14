@@ -1,16 +1,17 @@
 'use client';
 import WorkoutMiniCard from "@/components/WorkoutMiniCard";
 import { listDailyWorkouts } from "@/services/workouts";
-import { useEffect, useState } from "react";
+import type { DailyWorkoutsResponse } from "@/types";
+import { useEffect, useState, FC } from "react";
 
-function getCurrentDayOfWeek() {
+function getCurrentDayOfWeek(): string {
     const date = new Date();
-    const options = { weekday: 'long' };
+    const options: Intl.DateTimeFormatOptions = { weekday: 'long' };
     const dayName = date.toLocaleDateString('en-US', options);
     return dayName.toLowerCase();
 }
 
-const dayOfWeekOrder = {
+const dayOfWeekOrder: Record<string, number> = {
     'monday': 1,
     'tuesday': 2,
     'wednesday': 3,
@@ -20,9 +21,9 @@ const dayOfWeekOrder = {
     'sunday': 7,
 };
 
-export default function Home() {
-    const [workouts, setWorkouts] = useState([]);
-    const [error, setError] = useState('');
+const DashboardHome: FC = () => {
+    const [workouts, setWorkouts] = useState<DailyWorkoutsResponse | null>(null);
+    const [error, setError] = useState<string>('');
     const currenWeekday = getCurrentDayOfWeek();
 
     useEffect(() => {
@@ -32,8 +33,9 @@ export default function Home() {
                 setWorkouts(data);
             }
             catch (err) {
-                setError(err)
-                console.log('fetching daily workouts:', err.message);
+                const errorMessage = err instanceof Error ? err.message : 'Ошибка загрузки тренировок';
+                setError(errorMessage);
+                console.error(err);
             }
         }
         fetchDailyWorkouts();
@@ -50,7 +52,7 @@ export default function Home() {
         );
     }
 
-    if (workouts.length === 0) {
+    if (!workouts || workouts.workouts.length === 0) {
         return (
             <>
                 <div className="flex flex-col items-center justify-between md:items-start mb-5">
@@ -73,7 +75,7 @@ export default function Home() {
                         <WorkoutMiniCard
                             key={workout.id} workout={workout}
                             program={workouts.program_name}
-                            c />
+                             />
                     ))}
             </div>
             <div className="flex flex-col items-center justify-between md:items-start mb-5">
@@ -99,3 +101,5 @@ export default function Home() {
         </>
     );
 }
+
+export default DashboardHome;

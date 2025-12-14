@@ -1,16 +1,16 @@
 'use client';
 import { register } from "@/services/auth";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, FC, FormEvent } from "react";
 
-export default function RegisterForm() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+const RegisterForm: FC = () => {
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string>('');
     const router = useRouter();
 
-    async function handleOnSubmit(e) {
+    const handleOnSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         setError('');
         setLoading(true);
@@ -28,7 +28,8 @@ export default function RegisterForm() {
             await register({ email: trimmedEmail, password: trimmedPassword })
             router.push('/auth/login');
         } catch (err) {
-            setError(err.message || 'Ошибка регистрации');
+            const errorMessage = err instanceof Error ? err.message : 'Ошибка регистрации';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -73,3 +74,5 @@ export default function RegisterForm() {
         </div>
     );
 }
+
+export default RegisterForm;
