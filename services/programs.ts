@@ -1,11 +1,22 @@
 import apiClient from "@/lib/api";
 
-export async function listUserPrograms() {
+interface Program {
+    id: string | number;
+    title: string;
+    description: string;
+    created_at: string | Date;
+}
+
+interface ProgramsResponse {
+    programs: Program[];
+}
+
+export async function listUserPrograms(): Promise<ProgramsResponse> {
     const response = await apiClient.get('/api/v1/programs');
     return response.data;
 }
 
-export async function listTemplatePrograms() {
+export async function listTemplatePrograms(): Promise<ProgramsResponse> {
     const response = await apiClient.get('/api/v1/programs/templates');
     return response.data;
 }

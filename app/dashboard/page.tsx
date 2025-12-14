@@ -41,8 +41,9 @@ const DashboardHome: FC = () => {
                 setWorkouts(data);
             }
             catch (err) {
-                setError(err)
-                console.log('fetching daily workouts:', err.message );
+                const errorMessage = err instanceof Error ? err.message : 'Ошибка загрузки тренировок';
+                setError(errorMessage);
+                console.error(err);
             }
         }
         fetchDailyWorkouts();

@@ -22,8 +22,9 @@ const Workouts: FC = () => {
                 setExercises(data);
             }
             catch (error) {
-                setError(error as string)
-                console.log('fetching workout exercises:', error);
+                const errorMessage = error instanceof Error ? error.message : 'Ошибка загрузки упражнений';
+                setError(errorMessage);
+                console.error('fetching workout exercises:', error);
             }
         }
 

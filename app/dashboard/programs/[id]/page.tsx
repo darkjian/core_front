@@ -5,7 +5,7 @@ import { useEffect, useState, FC } from 'react';
 
 interface ProgramData {
     program_name: string;
-    workouts: Array<any>;
+    workouts: Array<unknown>;
 }
 
 const dayOrder: string[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
@@ -33,7 +33,7 @@ const ProgramPage: FC = () => {
                 console.log(data);
             }
             catch (err) {
-                console.log('fetching workouts programs:', err);
+                console.error('fetching workouts programs:', err instanceof Error ? err.message : err);
             } finally {
                 setLoading(false);
             }

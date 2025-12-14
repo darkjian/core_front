@@ -30,8 +30,9 @@ const Programs: FC = () => {
                 setPrograms(data.programs);
             }
             catch (err) {
-                setError(err)
-                console.log('fetching user programs:', err);
+                const errorMessage = err instanceof Error ? err.message : 'Ошибка загрузки программ';
+                setError(errorMessage);
+                console.error('fetching user programs:', err);
             }
         }
         if (viewMode === 'my') {
@@ -47,7 +48,7 @@ const Programs: FC = () => {
                 setViewMode('templates');
             }
             catch (err) {
-                console.log('fetching template programs:', err);
+                console.error('fetching template programs:', err);
             }
         }
         if (viewMode === 'templates') {
