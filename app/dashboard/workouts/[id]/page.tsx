@@ -37,9 +37,12 @@ const Workouts: FC = () => {
 
     return (
         <>
-            <div className="flex flex-col items-center md:items-start">
-                <h3 className="text-2xl md:text-3xl text-gray-700 font-black mb-5">Тренировка: {workoutTitle}</h3>
+            <div className="flex flex-col items-center md:items-start mb-8">
+                <h1 className="text-3xl md:text-4xl text-gray-900 font-black">
+                    {workoutTitle}
+                </h1>
             </div>
+
             <div className="flex flex-col md:items-start gap-4 w-full">
                 {exercises.map((exercise) => (
                     <ExerciseCard

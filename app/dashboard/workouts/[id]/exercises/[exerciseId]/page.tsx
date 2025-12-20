@@ -1,7 +1,13 @@
 'use client';
 
-import { useParams } from 'next/navigation';
-import { FC } from 'react';
+import { WorkoutVideo } from "@/components/workout/WorkoutVideo";
+import { WorkoutTimer } from "@/components/workout/WorkoutTimer";
+import { WorkoutControls } from "@/components/workout/WorkoutControls";
+import { WorkoutSets } from "@/components/workout/WorkoutSets";
+import { useWorkoutTimer } from "@/hooks/useWorkoutTimer";
+import { useParams } from "next/navigation";
+import { FC } from "react";
+import { Button } from "@/components/ui/button";
 
 const ExerciseDetail: FC = () => {
   const params = useParams();
@@ -11,18 +17,76 @@ const ExerciseDetail: FC = () => {
   // TODO: Создать query hook для получения деталей упражнения
   // const { data: exercise, isLoading, error } = useGetExerciseDetail(exerciseId);
 
+  // Таймер упражнения
+  const { seconds, isRunning, start, pause, stop, completeSet, sets, clearSets } = useWorkoutTimer();
+  const hasStarted = seconds > 0 || sets.length > 0;
+
+  const handleComplete = () => {
+    console.log('Упражнение завершено!', {
+      exerciseId,
+      workoutId,
+      sets: sets.map(s => ({
+        setNumber: s.setNumber,
+        duration: s.duration,
+        timestamp: s.timestamp
+      })),
+      totalTime: sets.reduce((sum, s) => sum + s.duration, 0)
+    });
+  };
+
   return (
     <>
+      {/* Заголовок */}
       <div className="flex flex-col items-center md:items-start mb-8">
         <h1 className="text-3xl md:text-4xl text-gray-900 font-black">
-          Детали упражнения
+          Упражнение
         </h1>
-        <p className="text-gray-600 mt-2">
-          Workout ID: {workoutId} | Exercise ID: {exerciseId}
+        <p className="text-gray-600 mt-2 text-sm">
+          ID: {exerciseId}
         </p>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md p-8">
+      {/* Видео/картинка */}
+      <WorkoutVideo title="Упражнение" />
+
+      {/* Таймер */}
+      <div className="flex justify-center mb-8">
+        <WorkoutTimer seconds={seconds} isRunning={isRunning} />
+      </div>
+
+      {/* Кнопки управления */}
+      <div className="flex justify-center mb-8">
+        <WorkoutControls
+          isRunning={isRunning}
+          hasStarted={hasStarted}
+          onStart={start}
+          onPause={pause}
+          onStop={stop}
+          onComplete={completeSet}
+        />
+      </div>
+
+      {/* История подходов */}
+      {sets.length > 0 && (
+        <div className="mb-12 bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+          <WorkoutSets sets={sets} onClearSets={clearSets} />
+        </div>
+      )}
+
+      {/* Кнопка завершить упражнение */}
+      {sets.length > 0 && (
+        <div className="flex justify-center mb-12 gap-4">
+          <Button
+            onClick={handleComplete}
+            className="px-8 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700"
+          >
+            ✓ Завершить упражнение
+          </Button>
+        </div>
+      )}
+
+      {/* Information */}
+      <div className="bg-white rounded-lg shadow-md p-8 mt-8">
         <div className="flex flex-col gap-6">
           {/* Exercise Info */}
           <section>
@@ -70,26 +134,14 @@ const ExerciseDetail: FC = () => {
             </div>
           </section>
 
-          {/* Tips */}
-          <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              Советы выполнения
-            </h2>
-            <div className="bg-yellow-50 p-6 rounded-lg border border-yellow-200">
-              <p className="text-yellow-800">
-                Эта секция также загружается с API
-              </p>
-            </div>
-          </section>
-
           {/* Back Button */}
           <div className="mt-8">
-            <button
+            <Button
               onClick={() => window.history.back()}
-              className="px-6 py-2 bg-gray-200 text-gray-700 font-medium rounded-md hover:bg-gray-300 transition"
+              variant="outline"
             >
-              ← Назад к тренировке
-            </button>
+              ← Назад к упражнениям
+            </Button>
           </div>
         </div>
       </div>
