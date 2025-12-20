@@ -1,9 +1,9 @@
 'use client';
 
 import ProgramMiniCard from "@/components/ProgramMiniCard";
-import { listTemplatePrograms, listUserPrograms } from "@/services/programs";
+import { useGetUserPrograms, useGetTemplatePrograms } from "@/hooks/queries";
 import type { Program } from "@/types";
-import { useEffect, useState, FC, ReactNode } from "react";
+import { FC, ReactNode, useState } from "react";
 
 const listPrograms = (programs: Program[]): ReactNode[] => {
     return programs.map((program) => (
@@ -12,44 +12,25 @@ const listPrograms = (programs: Program[]): ReactNode[] => {
 }
 
 const Programs: FC = () => {
-    const [programs, setPrograms] = useState<Program[]>([]);
-    const [templates, setTemplates] = useState<Program[]>([]);
-    const [error, setError] = useState<string>('');
     const [viewMode, setViewMode] = useState<'my' | 'templates'>('my');
 
-    useEffect(() => {
-        async function fetchPrograms() {
-            try {
-                const data = await listUserPrograms();
-                setPrograms(data.programs);
-            }
-            catch (err) {
-                const errorMessage = err instanceof Error ? err.message : 'Ошибка загрузки программ';
-                setError(errorMessage);
-                console.error('fetching user programs:', err);
-            }
-        }
-        if (viewMode === 'my') {
-            fetchPrograms();
-        }
-    }, [viewMode]);
+    // TanStack Query автоматически кэширует результаты
+    const userPrograms = useGetUserPrograms();
+    const templatePrograms = useGetTemplatePrograms();
 
-    useEffect(() => {
-        async function fetchTemplatePrograms() {
-            try {
-                const data = await listTemplatePrograms();
-                setPrograms(data.programs);
-                setViewMode('templates');
-            }
-            catch (err) {
-                console.error('fetching template programs:', err);
-            }
-        }
-        if (viewMode === 'templates') {
-            fetchTemplatePrograms();
-        }
+    // Выбираем данные в зависимости от режима
+    const isLoadingMy = viewMode === 'my' && userPrograms.isLoading;
+    const isLoadingTemplates = viewMode === 'templates' && templatePrograms.isLoading;
+    const isLoading = isLoadingMy || isLoadingTemplates;
 
-    }, [viewMode])
+    const error = viewMode === 'my' ? userPrograms.error : templatePrograms.error;
+    const programs = viewMode === 'my'
+        ? userPrograms.data?.programs || []
+        : templatePrograms.data?.programs || [];
+
+    if (isLoading) {
+        return <div className="p-8 text-center">Загрузка программ...</div>;
+    }
 
     if (error) {
         return (
@@ -73,10 +54,32 @@ const Programs: FC = () => {
         <>
             <div className="flex flex-col items-center md:items-start">
                 <h3 className="text-2xl md:text-3xl text-gray-700 font-black mb-5">Программы</h3>
+                <div className="flex gap-2 mb-4">
+                    <button
+                        onClick={() => setViewMode('my')}
+                        className={`px-4 py-2 rounded ${
+                            viewMode === 'my'
+                                ? 'bg-indigo-600 text-white'
+                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                        }`}
+                    >
+                        Мои программы
+                    </button>
+                    <button
+                        onClick={() => setViewMode('templates')}
+                        className={`px-4 py-2 rounded ${
+                            viewMode === 'templates'
+                                ? 'bg-indigo-600 text-white'
+                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                        }`}
+                    >
+                        Шаблоны
+                    </button>
+                </div>
             </div>
             <div className="flex flex-col md:items-start gap-3">
                 {listPrograms(programs)}
-            </div >
+            </div>
         </>
     );
 }
