@@ -9,9 +9,10 @@ export const ThemeChanger = () => {
   const [mounted, setMounted] = useState(false)
 
   // Prevent hydration mismatch
-  // useEffect(() => {
-  //   setMounted(true)
-  // }, [])
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true)
+  }, [])
 
   if (!mounted) {
     return null
