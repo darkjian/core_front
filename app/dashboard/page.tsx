@@ -21,7 +21,7 @@ const dayOfWeekOrder: Record<string, number> = {
 };
 
 const DashboardHome: FC = () => {
-    const { data: workouts, error, isLoading } = useGetDailyWorkouts();
+    const { data: response, error, isLoading } = useGetDailyWorkouts();
     const currenWeekday = getCurrentDayOfWeek();
 
     if (isLoading) {
@@ -39,7 +39,14 @@ const DashboardHome: FC = () => {
         );
     }
 
-    if (!workouts || workouts.workouts.length === 0) {
+    const allWorkouts = response?.data?.flatMap((program) =>
+        program.workouts.map((workout) => ({
+            ...workout,
+            program_name: program.program_name,
+        }))
+    ) || [];
+
+    if (allWorkouts.length === 0) {
         return (
             <>
                 <div className="flex flex-col items-center justify-between md:items-start mb-5">
@@ -56,12 +63,12 @@ const DashboardHome: FC = () => {
                 <span className="text-2xl md:text-3xl text-gray-700 font-black">Тренировки</span>
             </div>
             <div className="flex flex-col gap-3 md:items-start mb-5">
-                {workouts.workouts
+                {allWorkouts
                     .filter(workout => workout.day_of_week === currenWeekday)
                     .map((workout) => (
                         <WorkoutMiniCard
                             key={workout.id} workout={workout}
-                            program={workouts.program_name}
+                            program={workout.program_name}
                              />
                     ))}
             </div>
@@ -69,7 +76,7 @@ const DashboardHome: FC = () => {
                 <span className="text-sm md:text-lg text-gray-400 ">Предстоящие тренировки</span>
             </div>
             <div className="flex flex-col gap-3 md:items-start mb-5">
-                {workouts.workouts
+                {allWorkouts
                     .filter(workout => workout.day_of_week !== currenWeekday)
                     .sort((a, b) => {
                         const dayA = a.day_of_week.toLowerCase();
@@ -80,7 +87,7 @@ const DashboardHome: FC = () => {
                         <WorkoutMiniCard
                             key={workout.id}
                             workout={workout}
-                            program={workouts.program_name}
+                            program={workout.program_name}
                             isToday={workout.day_of_week === currenWeekday}
                         />
                     ))}

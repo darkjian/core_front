@@ -5,6 +5,7 @@ export interface Workout {
     id: string;
     title: string;
     day_of_week: string;
+    is_today?: boolean;
 }
 
 /**
@@ -33,12 +34,23 @@ export interface Program {
 /**
  * API Response types
  */
-export interface ProgramWorkoutsResponse {
+
+// Single program with workouts
+export interface ProgramWorkout {
+    program_id: string;
     program_name: string;
     workouts: Workout[];
 }
 
+// Paginated response for daily workouts
 export interface DailyWorkoutsResponse {
+    data: ProgramWorkout[];
+    total: number;
+    next_offset: number;
+}
+
+// Single program workouts (for [id] route)
+export interface ProgramWorkoutsResponse {
     program_name: string;
     workouts: Workout[];
 }
