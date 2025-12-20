@@ -1,0 +1,23 @@
+# Node
+node_modules
+.pnpm-store
+.env*
+.env.local
+.env.*.local
+
+# Next.js
+.next
+out
+build
+dist
+
+# Static assets
+public/models/assets
+public/static
+*.min.js
+*.map
+
+# Misc
+.vscode
+.idea
+.DS_Store

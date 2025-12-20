@@ -1,7 +1,7 @@
-import type { FC } from "react";
+import type { FC } from 'react'
 
 const ProgramCard: FC = () => {
-    return null;
-};
+  return null
+}
 
-export default ProgramCard;
+export default ProgramCard
