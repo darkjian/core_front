@@ -3,6 +3,7 @@
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 import { Moon, Sun } from 'lucide-react'
+import { Switch } from '@/components/ui/switch'
 
 export const ThemeChanger = () => {
   const { theme, setTheme } = useTheme()
@@ -25,13 +26,14 @@ export const ThemeChanger = () => {
   }
 
   return (
-    <button
-      onClick={handleThemeChange}
-      className='hover:bg-muted absolute top-4 right-4 rounded-md p-2 transition-colors'
+    <Switch
+      checked={isDark}
+      onCheckedChange={handleThemeChange}
+      className='absolute top-4 right-4'
       aria-label='Toggle theme'
     >
-      {isDark ? <Sun className='h-5 w-5 text-yellow-500' /> : <Moon className='h-5 w-5 text-slate-700' />}
-    </button>
+      {isDark ? <Sun className='h-3 w-3 text-yellow-500' /> : <Moon className='h-3 w-3 text-slate-700' />}
+    </Switch>
   )
 }
 
