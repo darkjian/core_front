@@ -1,4 +1,5 @@
 'use client';
+import ExerciseCard from "@/components/ExerciseCard";
 import { useGetWorkoutExercises } from "@/hooks/queries/workouts";
 import { useParams, useSearchParams } from "next/navigation";
 import { FC } from "react";
@@ -39,14 +40,15 @@ const Workouts: FC = () => {
             <div className="flex flex-col items-center md:items-start">
                 <h3 className="text-2xl md:text-3xl text-gray-700 font-black mb-5">Тренировка: {workoutTitle}</h3>
             </div>
-            <div className="flex flex-col md:items-start gap-3">
+            <div className="flex flex-col md:items-start gap-4 w-full">
                 {exercises.map((exercise) => (
-                    <div key={exercise.id}>
-                        <span>{exercise.id}</span>
-                        <span>{exercise.title}</span>
-                    </div>
+                    <ExerciseCard
+                        key={exercise.id}
+                        exercise={exercise}
+                        workoutId={workoutId}
+                    />
                 ))}
-            </div >
+            </div>
         </>
     )
 }
