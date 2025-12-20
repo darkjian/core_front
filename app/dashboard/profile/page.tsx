@@ -1,10 +1,7 @@
-
-import type { FC } from "react";
+import type { FC } from 'react'
 
 const Profile: FC = () => {
-    return (
-        <h1>Profile page</h1>
-    );
-};
+  return <h1>Profile page</h1>
+}
 
-export default Profile;
+export default Profile

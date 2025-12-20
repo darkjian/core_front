@@ -1,6 +1,7 @@
-import "./globals.css";
-import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import './globals.css'
+import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
+import { Providers } from './providers'
 
 // сделай картинку public/og-image.jpg (1200×630)
 export const metadata: Metadata = {
@@ -34,18 +35,18 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-};
+}
 
 interface RootLayoutProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="ru">
-      <body className="antialiased">
-        {children}
+    <html lang='ru'>
+      <body className='antialiased'>
+        <Providers>{children}</Providers>
       </body>
     </html>
-  );
+  )
 }
