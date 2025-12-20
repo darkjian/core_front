@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { devtools } from 'zustand/middleware';
 
 export interface User {
   id: string;
@@ -15,30 +16,41 @@ interface UserStore {
 
 /**
  * Zustand store для управления данными пользователя
- * Использует persist для сохранения в localStorage
+ * Использует persist для сохранения в localStorage и devtools для отладки
  */
 export const useUserStore = create<UserStore>()(
-  persist(
-    (set) => ({
-      user: null,
-      isAuthenticated: false,
+  devtools(
+    persist(
+      (set) => ({
+        user: null,
+        isAuthenticated: false,
 
-      setUser: (user) => {
-        set({
-          user,
-          isAuthenticated: user !== null,
-        });
-      },
+        setUser: (user) => {
+          set(
+            {
+              user,
+              isAuthenticated: user !== null,
+            },
+            undefined,
+            'user/setUser'
+          );
+        },
 
-      logout: () => {
-        set({
-          user: null,
-          isAuthenticated: false,
-        });
-      },
-    }),
-    {
-      name: 'user-store',
-    }
+        logout: () => {
+          set(
+            {
+              user: null,
+              isAuthenticated: false,
+            },
+            undefined,
+            'user/logout'
+          );
+        },
+      }),
+      {
+        name: 'user-store',
+      }
+    ),
+    { name: 'UserStore' }
   )
 );
