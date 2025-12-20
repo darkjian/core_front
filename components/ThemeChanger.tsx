@@ -27,10 +27,10 @@ export const ThemeChanger = () => {
   return (
     <button
       onClick={handleThemeChange}
-      className='absolute top-4 right-4 rounded-md p-2 transition-colors hover:bg-gray-200 dark:hover:bg-gray-700'
+      className='hover:bg-muted absolute top-4 right-4 rounded-md p-2 transition-colors'
       aria-label='Toggle theme'
     >
-      {isDark ? <Sun className='h-5 w-5 text-yellow-500' /> : <Moon className='h-5 w-5 text-gray-600' />}
+      {isDark ? <Sun className='h-5 w-5 text-yellow-500' /> : <Moon className='h-5 w-5 text-slate-700' />}
     </button>
   )
 }
