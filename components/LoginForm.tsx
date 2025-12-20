@@ -1,44 +1,34 @@
-// components/LoginForm.js
 'use client';
 
-import { login } from '@/services/auth';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useState, FC, FormEvent } from 'react';
+import { useLoginMutation } from '@/hooks/mutations/auth';
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [error, setError] = useState<string>('');
-    const [loading, setLoading] = useState<boolean>(false);
+    const [fieldError, setFieldError] = useState<string>('');
     const searchParams = useSearchParams();
     const fromUrl = searchParams.get('from');
-    const router = useRouter();
+
+    const loginMutation = useLoginMutation();
+    const isPending = loginMutation.isPending;
+    const error = loginMutation.error;
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-        setError('');
-        setLoading(true);
+        setFieldError('');
 
         const trimmedEmail = email.trim();
         const trimmedPassword = password.trim();
 
         if (!trimmedEmail || !trimmedPassword) {
-            setError('Заполните все поля');
-            setLoading(false);
+            setFieldError('Заполните все поля');
             return;
         }
 
-        try {
-            await login({ email: trimmedEmail, password: trimmedPassword });
-            const redirectTo = fromUrl?.startsWith('/dashboard') ? fromUrl : '/dashboard';
-            router.push(redirectTo);
-        } catch (err) {
-            const errorMessage = err instanceof Error ? err.message : 'Ошибка входа';
-            setError(errorMessage);
-        } finally {
-            setLoading(false);
-        }
+        loginMutation.mutate({ email: trimmedEmail, password: trimmedPassword });
     };
 
     return (
@@ -56,7 +46,7 @@ const LoginForm: FC = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                            disabled={loading}
+                            disabled={isPending}
                         />
                         <input
                             type="password"
@@ -64,7 +54,7 @@ const LoginForm: FC = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                            disabled={loading}
+                            disabled={isPending}
                         />
 
                         <div className="flex gap-3 justify-between items-center pt-4">
@@ -76,15 +66,15 @@ const LoginForm: FC = () => {
                             </Link>
                             <button
                                 type="submit"
-                                disabled={loading}
+                                disabled={isPending}
                                 className="px-6 py-2 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                {loading ? 'Вход...' : 'Войти'}
+                                {isPending ? 'Вход...' : 'Войти'}
                             </button>
                         </div>
                     </form>
 
-                    {error && <p className="py-4 text-center text-red-500">{error}</p>}
+                    {(error || fieldError) && <p className="py-4 text-center text-red-500">{error?.message || fieldError}</p>}
                 </div>
             </div>
         </div>

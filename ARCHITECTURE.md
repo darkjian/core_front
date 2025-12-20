@@ -146,13 +146,24 @@ export function Profile() {
 | Состояние формы | useState в компоненте или custom hook |
 | Состояние меню | useState в компоненте |
 
+## Статус миграции
+
+✅ **Полностью переведено на TanStack Query:**
+- Dashboard (тренировки) - `hooks/queries/workouts.ts`
+- Programs (программы) - `hooks/queries/programs.ts`
+- Workouts detail (упражнения) - `hooks/queries/workouts.ts`
+- Auth forms - `hooks/mutations/auth.ts`
+
+❌ **Прямых импортов сервисов больше нет в компонентах**
+
 ## Расширение
 
 ### Добавить новый query hook
 
 1. Создать функцию в `services/`
-2. Добавить hook в `hooks/queries/`
-3. Использовать в компонентах
+2. Добавить hook в `hooks/queries/newEntity.ts`
+3. Экспортировать в `hooks/queries/index.ts`
+4. Использовать в компонентах
 
 ```typescript
 // services/exercises.ts
@@ -168,6 +179,36 @@ export function useGetExerciseDetail(id: string) {
     enabled: !!id,
   });
 }
+
+// hooks/queries/index.ts
+export * from './exercises';
+
+// Использование в компоненте
+const { data: exercise } = useGetExerciseDetail(id);
+```
+
+### Добавить новую mutation (POST/PUT/DELETE)
+
+```typescript
+// hooks/mutations/exercises.ts
+export function useCreateExercise() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data) => createExercise(data),
+    onSuccess: () => {
+      // Инвалидировать связанные query для рефетчинга
+      queryClient.invalidateQueries({ queryKey: ['exercises'] });
+    },
+    onError: (error) => {
+      console.error('Ошибка создания:', error);
+    },
+  });
+}
+
+// Использование
+const createMutation = useCreateExercise();
+await createMutation.mutateAsync({ title: 'Новое упражнение' });
 ```
 
 ### Добавить новый Zustand store

@@ -1,38 +1,29 @@
 'use client';
-import { register } from "@/services/auth";
-import { useRouter } from "next/navigation";
 import { useState, FC, FormEvent } from "react";
+import { useRegisterMutation } from "@/hooks/mutations/auth";
 
 const RegisterForm: FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string>('');
-    const router = useRouter();
+    const [fieldError, setFieldError] = useState<string>('');
+
+    const registerMutation = useRegisterMutation();
+    const isPending = registerMutation.isPending;
+    const error = registerMutation.error;
 
     const handleOnSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-        setError('');
-        setLoading(true);
+        setFieldError('');
 
         const trimmedEmail = email.trim();
         const trimmedPassword = password.trim();
 
         if (!trimmedEmail || !trimmedPassword) {
-            setError('Заполните все поля');
-            setLoading(false);
+            setFieldError('Заполните все поля');
             return;
         }
 
-        try {
-            await register({ email: trimmedEmail, password: trimmedPassword })
-            router.push('/auth/login');
-        } catch (err) {
-            const errorMessage = err instanceof Error ? err.message : 'Ошибка регистрации';
-            setError(errorMessage);
-        } finally {
-            setLoading(false);
-        }
+        registerMutation.mutate({ email: trimmedEmail, password: trimmedPassword });
     };
 
     return (
@@ -49,7 +40,7 @@ const RegisterForm: FC = () => {
                             value={email}
                             placeholder="Почта"
                             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                            disabled={loading}
+                            disabled={isPending}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         <input
@@ -57,18 +48,18 @@ const RegisterForm: FC = () => {
                             value={password}
                             placeholder="Пароль"
                             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                            disabled={loading}
+                            disabled={isPending}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         <button
                             type="submit"
-                            className="w-full py-2 px-4 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
-                            disabled={loading}
+                            className="w-full py-2 px-4 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled={isPending}
                         >
-                            Зарегистрироваться
+                            {isPending ? 'Регистрация...' : 'Зарегистрироваться'}
                         </button>
                     </form>
-                    {error && <p className="py-4 text-center text-red-500">{error}</p>}
+                    {(error || fieldError) && <p className="py-4 text-center text-red-500">{error?.message || fieldError}</p>}
                 </div>
             </div>
         </div>
