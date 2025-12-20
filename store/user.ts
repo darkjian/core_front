@@ -1,17 +1,17 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { devtools } from 'zustand/middleware';
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+import { devtools } from 'zustand/middleware'
 
 export interface User {
-  id: string;
-  email: string;
+  id: string
+  email: string
 }
 
 interface UserStore {
-  user: User | null;
-  isAuthenticated: boolean;
-  setUser: (user: User | null) => void;
-  logout: () => void;
+  user: User | null
+  isAuthenticated: boolean
+  setUser: (user: User | null) => void
+  logout: () => void
 }
 
 /**
@@ -32,8 +32,8 @@ export const useUserStore = create<UserStore>()(
               isAuthenticated: user !== null,
             },
             undefined,
-            'user/setUser'
-          );
+            'user/setUser',
+          )
         },
 
         logout: () => {
@@ -43,14 +43,14 @@ export const useUserStore = create<UserStore>()(
               isAuthenticated: false,
             },
             undefined,
-            'user/logout'
-          );
+            'user/logout',
+          )
         },
       }),
       {
         name: 'user-store',
-      }
+      },
     ),
-    { name: 'UserStore' }
-  )
-);
+    { name: 'UserStore' },
+  ),
+)

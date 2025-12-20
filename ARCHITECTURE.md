@@ -48,9 +48,9 @@ Backend
 // hooks/queries/workouts.ts
 export function useGetDailyWorkouts() {
   return useQuery({
-    queryKey: ['dailyWorkouts'],      // ← Уникальный ключ (кэш)
-    queryFn: listDailyWorkouts,       // ← Функция из services/
-  });
+    queryKey: ['dailyWorkouts'], // ← Уникальный ключ (кэш)
+    queryFn: listDailyWorkouts, // ← Функция из services/
+  })
 }
 
 // hooks/queries/programs.ts
@@ -58,7 +58,7 @@ export function useGetUserPrograms() {
   return useQuery({
     queryKey: ['userPrograms'],
     queryFn: listUserPrograms,
-  });
+  })
 }
 ```
 
@@ -85,13 +85,13 @@ export function Dashboard() {
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5,        // Данные свежие 5 минут
-      gcTime: 1000 * 60 * 10,          // Удалить из памяти после 10 минут
-      retry: 1,                         // Повторить 1 раз при ошибке
-      refetchOnWindowFocus: false,      // Не рефетчить когда фокус вернулся
+      staleTime: 1000 * 60 * 5, // Данные свежие 5 минут
+      gcTime: 1000 * 60 * 10, // Удалить из памяти после 10 минут
+      retry: 1, // Повторить 1 раз при ошибке
+      refetchOnWindowFocus: false, // Не рефетчить когда фокус вернулся
     },
   },
-});
+})
 ```
 
 ## Zustand (для клиентского состояния)
@@ -111,6 +111,7 @@ store/
 ### Примеры
 
 **User store (с сохранением в localStorage):**
+
 ```typescript
 // store/user.ts
 export const useUserStore = create<UserStore>()(
@@ -121,21 +122,23 @@ export const useUserStore = create<UserStore>()(
       setUser: (user) => set({ user, isAuthenticated: true }),
       logout: () => set({ user: null, isAuthenticated: false }),
     }),
-    { name: 'user-store' }  // Сохранять в localStorage
-  )
-);
+    { name: 'user-store' }, // Сохранять в localStorage
+  ),
+)
 ```
 
 **Programs store (состояния программ):**
+
 ```typescript
 // store/programs.ts
 export const useProgramsStore = create<ProgramsStore>((set) => ({
   viewMode: 'my',
   setViewMode: (mode) => set({ viewMode: mode }),
-}));
+}))
 ```
 
 **Auth store (состояние форм аутентификации):**
+
 ```typescript
 // store/auth.ts
 export const useLoginFormStore = create<LoginFormState>((set) => ({
@@ -146,7 +149,7 @@ export const useLoginFormStore = create<LoginFormState>((set) => ({
   setPassword: (password) => set({ password }),
   setFieldError: (error) => set({ fieldError: error }),
   reset: () => set({ email: '', password: '', fieldError: '' }),
-}));
+}))
 
 export const useRegisterFormStore = create<RegisterFormState>((set) => ({
   email: '',
@@ -156,7 +159,7 @@ export const useRegisterFormStore = create<RegisterFormState>((set) => ({
   setPassword: (password) => set({ password }),
   setFieldError: (error) => set({ fieldError: error }),
   reset: () => set({ email: '', password: '', fieldError: '' }),
-}));
+}))
 ```
 
 ### Использование в компонентах
@@ -191,33 +194,38 @@ export function MyComponent() {
 
 ## Когда что использовать
 
-| Задача | Использовать |
-|--------|-------------|
-| Загрузить данные с API | `useQuery` из `hooks/queries/` |
-| Отправить данные на сервер | `useMutation` из `hooks/mutations/` |
-| Состояние форм | `useLoginFormStore`, `useRegisterFormStore` из `store/auth.ts` |
-| Состояние programs (viewMode, filters) | `useProgramsStore` из `store/programs.ts` |
-| Хранить данные юзера | `useUserStore` из `store/user.ts` (persisted) |
-| Добавить новое UI состояние | Создать новый файл в `store/` по имени модуля |
-| Кэширование между переходами | TanStack Query (автоматически) |
-| Синхронизация между вкладками | TanStack Query (автоматически) |
+| Задача                                 | Использовать                                                   |
+| -------------------------------------- | -------------------------------------------------------------- |
+| Загрузить данные с API                 | `useQuery` из `hooks/queries/`                                 |
+| Отправить данные на сервер             | `useMutation` из `hooks/mutations/`                            |
+| Состояние форм                         | `useLoginFormStore`, `useRegisterFormStore` из `store/auth.ts` |
+| Состояние programs (viewMode, filters) | `useProgramsStore` из `store/programs.ts`                      |
+| Хранить данные юзера                   | `useUserStore` из `store/user.ts` (persisted)                  |
+| Добавить новое UI состояние            | Создать новый файл в `store/` по имени модуля                  |
+| Кэширование между переходами           | TanStack Query (автоматически)                                 |
+| Синхронизация между вкладками          | TanStack Query (автоматически)                                 |
 
 ## Статус миграции
 
 ### TanStack Query (API данные)
+
 ✅ **Полностью переведено:**
+
 - Dashboard (тренировки) - `hooks/queries/workouts.ts`
 - Programs (программы) - `hooks/queries/programs.ts`
 - Workouts detail (упражнения) - `hooks/queries/workouts.ts`
 - Auth forms - `hooks/mutations/auth.ts`
 
 ### Zustand (Клиентское состояние)
+
 ✅ **Организовано по модулям:**
+
 - Programs состояние - `store/programs.ts` (viewMode)
 - Auth формы - `store/auth.ts` (login, register form state)
 - Данные юзера - `store/user.ts` (с persist в localStorage)
 
 ### Итого:
+
 ✅ **Нет useState в компонентах** (только для временных UI элементов типа dropdown)
 ✅ **Нет прямых импортов сервисов в компонентах**
 ✅ **Единая система управления состоянием**
@@ -234,7 +242,7 @@ export function MyComponent() {
 ```typescript
 // services/exercises.ts
 export async function getExerciseDetail(id: string) {
-  return apiClient.get(`/exercises/${id}`);
+  return apiClient.get(`/exercises/${id}`)
 }
 
 // hooks/queries/exercises.ts
@@ -243,14 +251,14 @@ export function useGetExerciseDetail(id: string) {
     queryKey: ['exercise', id],
     queryFn: () => getExerciseDetail(id),
     enabled: !!id,
-  });
+  })
 }
 
 // hooks/queries/index.ts
-export * from './exercises';
+export * from './exercises'
 
 // Использование в компоненте
-const { data: exercise } = useGetExerciseDetail(id);
+const { data: exercise } = useGetExerciseDetail(id)
 ```
 
 ### Добавить новую mutation (POST/PUT/DELETE)
@@ -258,23 +266,23 @@ const { data: exercise } = useGetExerciseDetail(id);
 ```typescript
 // hooks/mutations/exercises.ts
 export function useCreateExercise() {
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: (data) => createExercise(data),
     onSuccess: () => {
       // Инвалидировать связанные query для рефетчинга
-      queryClient.invalidateQueries({ queryKey: ['exercises'] });
+      queryClient.invalidateQueries({ queryKey: ['exercises'] })
     },
     onError: (error) => {
-      console.error('Ошибка создания:', error);
+      console.error('Ошибка создания:', error)
     },
-  });
+  })
 }
 
 // Использование
-const createMutation = useCreateExercise();
-await createMutation.mutateAsync({ title: 'Новое упражнение' });
+const createMutation = useCreateExercise()
+await createMutation.mutateAsync({ title: 'Новое упражнение' })
 ```
 
 ### Добавить новый Zustand store
@@ -283,13 +291,14 @@ await createMutation.mutateAsync({ title: 'Новое упражнение' });
 // store/theme.ts
 export const useThemeStore = create<ThemeStore>((set) => ({
   theme: 'light',
-  toggleTheme: () => set((state) => ({
-    theme: state.theme === 'light' ? 'dark' : 'light'
-  })),
-}));
+  toggleTheme: () =>
+    set((state) => ({
+      theme: state.theme === 'light' ? 'dark' : 'light',
+    })),
+}))
 
 // store/index.ts
-export { useThemeStore } from './theme';
+export { useThemeStore } from './theme'
 ```
 
 ### Добавить mutations (когда понадобятся POST/PUT/DELETE)
@@ -297,20 +306,20 @@ export { useThemeStore } from './theme';
 ```typescript
 // hooks/mutations/workouts.ts
 export function useCreateWorkout() {
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: (data) => createWorkout(data),
     onSuccess: () => {
       // Рефетчить связанные query
-      queryClient.invalidateQueries({ queryKey: ['workouts'] });
+      queryClient.invalidateQueries({ queryKey: ['workouts'] })
     },
-  });
+  })
 }
 
 // Использование
-const createMutation = useCreateWorkout();
-await createMutation.mutateAsync({ title: 'Новая тренировка' });
+const createMutation = useCreateWorkout()
+await createMutation.mutateAsync({ title: 'Новая тренировка' })
 ```
 
 ## Dev Tools

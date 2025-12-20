@@ -1,16 +1,16 @@
-'use client';
+'use client'
 
-import { Button } from '@/components/ui/button';
-import { FC } from 'react';
-import { Play, Pause, Square, CheckCircle2 } from 'lucide-react';
+import { Button } from '@/components/ui/button'
+import { FC } from 'react'
+import { Play, Pause, Square, CheckCircle2 } from 'lucide-react'
 
 interface WorkoutControlsProps {
-  isRunning: boolean;
-  hasStarted: boolean;
-  onStart: () => void;
-  onPause: () => void;
-  onStop: () => void;
-  onComplete: () => void;
+  isRunning: boolean
+  hasStarted: boolean
+  onStart: () => void
+  onPause: () => void
+  onStop: () => void
+  onComplete: () => void
 }
 
 /**
@@ -25,15 +25,15 @@ export const WorkoutControls: FC<WorkoutControlsProps> = ({
   onComplete,
 }) => {
   return (
-    <div className="flex items-center justify-center gap-4 flex-wrap">
+    <div className='flex flex-wrap items-center justify-center gap-4'>
       {/* Кнопка Начать */}
       {!hasStarted || !isRunning ? (
         <Button
           onClick={onStart}
-          size="lg"
-          className="rounded-full w-20 h-20 text-white bg-green-600 hover:bg-green-700"
+          size='lg'
+          className='h-20 w-20 rounded-full bg-green-600 text-white hover:bg-green-700'
         >
-          <Play className="w-8 h-8" />
+          <Play className='h-8 w-8' />
         </Button>
       ) : null}
 
@@ -41,22 +41,17 @@ export const WorkoutControls: FC<WorkoutControlsProps> = ({
       {isRunning && (
         <Button
           onClick={onPause}
-          size="lg"
-          className="rounded-full w-20 h-20 text-white bg-yellow-600 hover:bg-yellow-700"
+          size='lg'
+          className='h-20 w-20 rounded-full bg-yellow-600 text-white hover:bg-yellow-700'
         >
-          <Pause className="w-8 h-8" />
+          <Pause className='h-8 w-8' />
         </Button>
       )}
 
       {/* Кнопка Стоп */}
       {hasStarted && (
-        <Button
-          onClick={onStop}
-          size="lg"
-          variant="destructive"
-          className="rounded-full w-20 h-20"
-        >
-          <Square className="w-8 h-8" />
+        <Button onClick={onStop} size='lg' variant='destructive' className='h-20 w-20 rounded-full'>
+          <Square className='h-8 w-8' />
         </Button>
       )}
 
@@ -64,14 +59,14 @@ export const WorkoutControls: FC<WorkoutControlsProps> = ({
       {hasStarted && (
         <Button
           onClick={onComplete}
-          size="lg"
-          className="rounded-full w-20 h-20 text-white bg-blue-600 hover:bg-blue-700"
+          size='lg'
+          className='h-20 w-20 rounded-full bg-blue-600 text-white hover:bg-blue-700'
         >
-          <CheckCircle2 className="w-8 h-8" />
+          <CheckCircle2 className='h-8 w-8' />
         </Button>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default WorkoutControls;
+export default WorkoutControls

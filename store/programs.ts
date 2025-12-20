@@ -1,9 +1,9 @@
-import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { create } from 'zustand'
+import { devtools } from 'zustand/middleware'
 
 interface ProgramsStore {
-  viewMode: 'my' | 'templates';
-  setViewMode: (mode: 'my' | 'templates') => void;
+  viewMode: 'my' | 'templates'
+  setViewMode: (mode: 'my' | 'templates') => void
 }
 
 /**
@@ -13,9 +13,8 @@ export const useProgramsStore = create<ProgramsStore>()(
   devtools(
     (set) => ({
       viewMode: 'my',
-      setViewMode: (mode) =>
-        set({ viewMode: mode }, undefined, 'programs/setViewMode'),
+      setViewMode: (mode) => set({ viewMode: mode }, undefined, 'programs/setViewMode'),
     }),
-    { name: 'ProgramsStore' }
-  )
-);
+    { name: 'ProgramsStore' },
+  ),
+)

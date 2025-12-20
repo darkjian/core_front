@@ -1,15 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
-import {
-  listDailyWorkouts,
-  listProgramWorkouts,
-  listWorkoutExercises,
-} from '@/services/workouts';
+import { useQuery } from '@tanstack/react-query'
+import { listDailyWorkouts, listProgramWorkouts, listWorkoutExercises } from '@/services/workouts'
 
 export function useGetDailyWorkouts() {
   return useQuery({
     queryKey: ['dailyWorkouts'],
     queryFn: listDailyWorkouts,
-  });
+  })
 }
 
 export function useGetProgramWorkouts(programId: string) {
@@ -17,7 +13,7 @@ export function useGetProgramWorkouts(programId: string) {
     queryKey: ['programWorkouts', programId],
     queryFn: () => listProgramWorkouts(programId),
     enabled: !!programId,
-  });
+  })
 }
 
 export function useGetWorkoutExercises(workoutId: string) {
@@ -25,5 +21,5 @@ export function useGetWorkoutExercises(workoutId: string) {
     queryKey: ['workoutExercises', workoutId],
     queryFn: () => listWorkoutExercises(workoutId),
     enabled: !!workoutId,
-  });
+  })
 }

@@ -1,2 +1,2 @@
-export * from './workouts';
-export * from './programs';
+export * from './workouts'
+export * from './programs'
