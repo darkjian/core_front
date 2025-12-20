@@ -1,6 +1,7 @@
 'use client'
 
 import ProgramMiniCard from '@/components/ProgramMiniCard'
+import { ProgramsSkeleton } from '@/components/skeletons/ProgramsSkeleton'
 import { useGetUserPrograms, useGetTemplatePrograms } from '@/hooks/queries'
 import { useProgramsStore } from '@/store'
 import type { Program } from '@/types'
@@ -27,7 +28,7 @@ const Programs: FC = () => {
   const programs = viewMode === 'my' ? userPrograms.data?.programs || [] : templatePrograms.data?.programs || []
 
   if (isLoading) {
-    return <div className='p-8 text-center'>Загрузка программ...</div>
+    return <ProgramsSkeleton />
   }
 
   if (error) {

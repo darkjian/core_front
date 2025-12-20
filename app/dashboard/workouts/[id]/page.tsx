@@ -1,5 +1,6 @@
 'use client'
 import ExerciseCard from '@/components/ExerciseCard'
+import { ExercisesSkeleton } from '@/components/skeletons/ExercisesSkeleton'
 import { useGetWorkoutExercises } from '@/hooks/queries/workouts'
 import { useParams, useSearchParams } from 'next/navigation'
 import { FC } from 'react'
@@ -10,7 +11,7 @@ const Workouts: FC = () => {
   const { data: exercises = [], error, isLoading } = useGetWorkoutExercises(workoutId)
 
   if (isLoading) {
-    return <div className='p-8 text-center'>Загрузка упражнений...</div>
+    return <ExercisesSkeleton />
   }
 
   if (error) {

@@ -1,4 +1,5 @@
 'use client'
+import { ProgramWorkoutsSkeleton } from '@/components/skeletons/ProgramWorkoutsSkeleton'
 import { useGetProgramWorkouts } from '@/hooks/queries/workouts'
 import { useParams } from 'next/navigation'
 import { FC } from 'react'
@@ -19,7 +20,7 @@ const ProgramPage: FC = () => {
   const id = params?.id as string
   const { data, isLoading, error } = useGetProgramWorkouts(id)
 
-  if (isLoading) return <div className='p-8 text-center'>Загрузка...</div>
+  if (isLoading) return <ProgramWorkoutsSkeleton />
   if (error || !data) return <div>Ошибка загрузки</div>
 
   const { program_name, workouts } = data

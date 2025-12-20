@@ -1,5 +1,6 @@
 'use client'
 import WorkoutMiniCard from '@/components/WorkoutMiniCard'
+import { DailyWorkoutsSkeleton } from '@/components/skeletons/DailyWorkoutsSkeleton'
 import { useGetDailyWorkouts } from '@/hooks/queries/workouts'
 import { FC } from 'react'
 
@@ -25,7 +26,7 @@ const DashboardHome: FC = () => {
   const currenWeekday = getCurrentDayOfWeek()
 
   if (isLoading) {
-    return <div className='p-8 text-center'>Загрузка...</div>
+    return <DailyWorkoutsSkeleton />
   }
 
   if (error) {
