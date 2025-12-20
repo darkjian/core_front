@@ -4,6 +4,7 @@ import { BicepsFlexed, Home, Settings, User } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { FC, ReactNode } from 'react'
+import ThemeChanger from '@/components/ThemeChanger'
 
 interface NavItem {
   href: string
@@ -27,7 +28,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
   return (
     <>
       {/* Mobile bottom bar */}
-      <nav className='fixed right-0 bottom-0 left-0 z-50 flex justify-around border-t border-gray-200 bg-white/95 backdrop-blur-sm md:hidden'>
+      <nav className='border-border bg-card/95 fixed right-0 bottom-0 left-0 z-50 flex justify-around border-t backdrop-blur-sm md:hidden'>
         {navItems.map((item) => {
           const isActive = pathname === item.href
           return (
@@ -35,7 +36,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
               key={item.href}
               href={item.href}
               className={`flex flex-1 flex-col items-center gap-1 px-2 py-3 text-xs font-medium transition-all duration-200 ${
-                isActive ? 'text-indigo-600' : 'text-gray-500 hover:text-indigo-600'
+                isActive ? 'text-primary' : 'text-muted-foreground hover:text-primary'
               }`}
             >
               <div className={`transition-transform ${isActive ? 'scale-110' : ''}`}>{item.icon}</div>
@@ -46,7 +47,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
       </nav>
 
       {/* Desktop sidebar */}
-      <nav className='fixed top-0 left-0 hidden h-full w-64 flex-col border-r border-gray-200 bg-white md:flex'>
+      <nav className='border-border bg-sidebar fixed top-0 left-0 hidden h-full w-64 flex-col border-r md:flex'>
         <div className='flex-1 space-y-1 p-4 pt-20'>
           {navItems.map((item) => {
             const isActive = pathname === item.href
@@ -56,11 +57,11 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
                 href={item.href}
                 className={`group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
                   isActive
-                    ? 'bg-indigo-600 text-white shadow-sm'
-                    : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600'
+                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    : 'text-foreground hover:bg-primary/10 hover:text-primary'
                 }`}
               >
-                <div className={isActive ? '' : 'text-gray-500 group-hover:text-indigo-600'}>{item.icon}</div>
+                <div className={isActive ? '' : 'text-muted-foreground group-hover:text-primary'}>{item.icon}</div>
                 <span>{item.name}</span>
               </Link>
             )
@@ -68,10 +69,11 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
         </div>
       </nav>
 
-      <div className='min-h-screen bg-gray-50'>
+      <div className='bg-background min-h-screen'>
         <div className='pb-16 md:pb-0 md:pl-64'>
           <main className='mx-auto max-w-7xl px-4 py-8 transition-all duration-300 ease-in-out sm:px-6 lg:px-8'>
             {children}
+            <ThemeChanger />
           </main>
         </div>
       </div>

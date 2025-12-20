@@ -23,7 +23,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
   const pathname = usePathname()
   return (
     <>
-      <header className='border-b border-gray-200 bg-white shadow-sm'>
+      <header className='border-border bg-card border-b shadow-sm'>
         <nav className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
           <div className='justify-left flex h-16 items-center space-x-8'>
             {navItems.map((item) => {
@@ -33,7 +33,9 @@ const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
                   key={item.href}
                   href={item.href}
                   className={`rounded-md px-3 py-2 text-sm font-medium transition ${
-                    isActive ? 'bg-indigo-600 text-white' : 'text-gray-700 hover:bg-indigo-50 hover:text-indigo-600'
+                    isActive
+                      ? 'bg-primary text-primary-foreground'
+                      : 'text-foreground hover:bg-primary/10 hover:text-primary'
                   } `}
                 >
                   {item.name}

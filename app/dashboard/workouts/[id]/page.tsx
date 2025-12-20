@@ -18,9 +18,9 @@ const Workouts: FC = () => {
     return (
       <>
         <div className='mb-5 flex flex-col items-center justify-between md:items-start'>
-          <span className='text-2xl font-black text-gray-700 md:text-3xl'>Тренировка: {workoutTitle}</span>
+          <span className='text-foreground text-2xl font-black md:text-3xl'>Тренировка: {workoutTitle}</span>
         </div>
-        <span className='flex justify-center pt-64 text-sm text-red-400'>ошибка подключения к серверу</span>
+        <span className='text-destructive flex justify-center pt-64 text-sm'>ошибка подключения к серверу</span>
       </>
     )
   }
@@ -29,9 +29,9 @@ const Workouts: FC = () => {
     return (
       <>
         <div className='mb-5 flex flex-col items-center justify-between md:items-start'>
-          <span className='text-2xl font-black text-gray-700 md:text-3xl'>Тренировка: {workoutTitle}</span>
+          <span className='text-foreground text-2xl font-black md:text-3xl'>Тренировка: {workoutTitle}</span>
         </div>
-        <span className='flex justify-center pt-64 text-sm text-gray-400'>упражнения нет</span>
+        <span className='text-muted-foreground flex justify-center pt-64 text-sm'>упражнения нет</span>
       </>
     )
   }
@@ -39,7 +39,7 @@ const Workouts: FC = () => {
   return (
     <>
       <div className='mb-8 flex flex-col items-center md:items-start'>
-        <h1 className='text-3xl font-black text-gray-900 md:text-4xl'>{workoutTitle}</h1>
+        <h1 className='text-foreground text-3xl font-black md:text-4xl'>{workoutTitle}</h1>
       </div>
 
       <div className='flex w-full flex-col gap-4 md:items-start'>

@@ -13,7 +13,7 @@ export const ProgramWorkoutsSkeleton = () => {
       {/* Workouts list skeleton */}
       <div className='space-y-4'>
         {Array.from({ length: 3 }).map((_, idx) => (
-          <div key={idx} className='space-y-3 rounded-lg border border-gray-200 bg-white p-4'>
+          <div key={idx} className='border-border bg-card space-y-3 rounded-lg border p-4'>
             {/* Workout title */}
             <Skeleton className='h-6 w-48' />
 

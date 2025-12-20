@@ -38,8 +38,8 @@ const ExerciseDetail: FC = () => {
     <>
       {/* Заголовок */}
       <div className='mb-8 flex flex-col items-center md:items-start'>
-        <h1 className='text-3xl font-black text-gray-900 md:text-4xl'>Упражнение</h1>
-        <p className='mt-2 text-sm text-gray-600'>ID: {exerciseId}</p>
+        <h1 className='text-foreground text-3xl font-black md:text-4xl'>Упражнение</h1>
+        <p className='text-muted-foreground mt-2 text-sm'>ID: {exerciseId}</p>
       </div>
 
       {/* Видео/картинка */}
@@ -64,7 +64,7 @@ const ExerciseDetail: FC = () => {
 
       {/* История подходов */}
       {sets.length > 0 && (
-        <div className='mb-12 rounded-lg border border-gray-200 bg-white p-6 shadow-sm'>
+        <div className='border-border bg-card mb-12 rounded-lg border p-6 shadow-sm'>
           <WorkoutSets sets={sets} onClearSets={clearSets} />
         </div>
       )}
@@ -72,32 +72,29 @@ const ExerciseDetail: FC = () => {
       {/* Кнопка завершить упражнение */}
       {sets.length > 0 && (
         <div className='mb-12 flex justify-center gap-4'>
-          <Button
-            onClick={handleComplete}
-            className='rounded-lg bg-green-600 px-8 py-3 font-semibold text-white hover:bg-green-700'
-          >
+          <Button onClick={handleComplete} className='rounded-lg px-8 py-3 font-semibold'>
             ✓ Завершить упражнение
           </Button>
         </div>
       )}
 
       {/* Information */}
-      <div className='mt-8 rounded-lg bg-white p-8 shadow-md'>
+      <div className='border-border bg-card mt-8 rounded-lg border p-8 shadow-md'>
         <div className='flex flex-col gap-6'>
           {/* Exercise Info */}
           <section>
-            <h2 className='mb-4 text-2xl font-bold text-gray-900'>Информация об упражнении</h2>
-            <div className='rounded-lg border border-gray-200 bg-gray-50 p-6'>
-              <p className='text-gray-600'>Здесь будет информация об упражнении. Нужно создать:</p>
-              <ul className='mt-3 list-inside list-disc space-y-2 text-gray-600'>
+            <h2 className='text-foreground mb-4 text-2xl font-bold'>Информация об упражнении</h2>
+            <div className='border-border bg-muted rounded-lg border p-6'>
+              <p className='text-muted-foreground'>Здесь будет информация об упражнении. Нужно создать:</p>
+              <ul className='text-muted-foreground mt-3 list-inside list-disc space-y-2'>
                 <li>
-                  Query hook: <code className='rounded bg-gray-100 px-2 py-1'>useGetExerciseDetail(id)</code>
+                  Query hook: <code className='bg-background rounded px-2 py-1'>useGetExerciseDetail(id)</code>
                 </li>
                 <li>
-                  Service функция: <code className='rounded bg-gray-100 px-2 py-1'>getExerciseDetail(id)</code>
+                  Service функция: <code className='bg-background rounded px-2 py-1'>getExerciseDetail(id)</code>
                 </li>
                 <li>
-                  API endpoint: <code className='rounded bg-gray-100 px-2 py-1'>/api/v1/exercises/:id</code>
+                  API endpoint: <code className='bg-background rounded px-2 py-1'>/api/v1/exercises/:id</code>
                 </li>
               </ul>
             </div>
@@ -105,24 +102,24 @@ const ExerciseDetail: FC = () => {
 
           {/* Session Parameters */}
           <section>
-            <h2 className='mb-4 text-2xl font-bold text-gray-900'>Параметры сессии</h2>
+            <h2 className='text-foreground mb-4 text-2xl font-bold'>Параметры сессии</h2>
             <div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
-              <div className='rounded-lg border border-indigo-200 bg-indigo-50 p-4'>
-                <p className='text-sm font-medium text-indigo-600'>Сетов</p>
-                <p className='mt-2 text-3xl font-bold text-indigo-900'>-</p>
+              <div className='border-primary/30 bg-primary/10 rounded-lg border p-4'>
+                <p className='text-primary text-sm font-medium'>Сетов</p>
+                <p className='text-primary mt-2 text-3xl font-bold'>-</p>
               </div>
-              <div className='rounded-lg border border-blue-200 bg-blue-50 p-4'>
-                <p className='text-sm font-medium text-blue-600'>Повторений</p>
-                <p className='mt-2 text-3xl font-bold text-blue-900'>-</p>
+              <div className='border-secondary/30 bg-secondary/10 rounded-lg border p-4'>
+                <p className='text-secondary text-sm font-medium'>Повторений</p>
+                <p className='text-secondary mt-2 text-3xl font-bold'>-</p>
               </div>
             </div>
           </section>
 
           {/* Description */}
           <section>
-            <h2 className='mb-4 text-2xl font-bold text-gray-900'>Описание</h2>
-            <div className='rounded-lg border border-gray-200 bg-gray-50 p-6'>
-              <p className='leading-relaxed text-gray-600'>Описание упражнения будет загружено с сервера...</p>
+            <h2 className='text-foreground mb-4 text-2xl font-bold'>Описание</h2>
+            <div className='border-border bg-muted rounded-lg border p-6'>
+              <p className='text-muted-foreground leading-relaxed'>Описание упражнения будет загружено с сервера...</p>
             </div>
           </section>
 

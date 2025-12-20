@@ -17,12 +17,12 @@ const formatDate = (date: string | Date): string => {
 const ProgramMiniCard: FC<ProgramMiniCardProps> = ({ program }) => {
   return (
     <Link
-      className='group transition-color flex min-w-xs flex-col rounded-xl bg-white p-3 drop-shadow-lg duration-300 hover:bg-indigo-50'
+      className='group transition-color border-border bg-card hover:bg-muted flex min-w-xs flex-col rounded-xl border p-3 drop-shadow-lg duration-300'
       href={`/dashboard/programs/${program.id}`}
     >
-      <span className='line-clamp-1 text-sm font-bold text-gray-700 group-hover:text-indigo-600'>{program.title}</span>
-      <span className='line-clamp-1 text-xs text-gray-600'>{program.description}</span>
-      <span className='mt-2 text-xs text-gray-400'>{formatDate(program.created_at)}</span>
+      <span className='text-foreground group-hover:text-primary line-clamp-1 text-sm font-bold'>{program.title}</span>
+      <span className='text-muted-foreground line-clamp-1 text-xs'>{program.description}</span>
+      <span className='text-muted-foreground/60 mt-2 text-xs'>{formatDate(program.created_at)}</span>
     </Link>
   )
 }
