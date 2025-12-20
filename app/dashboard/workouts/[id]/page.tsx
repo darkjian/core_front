@@ -1,12 +1,16 @@
 'use client';
-import { useGetWorkoutExercises } from "@/hooks/useGetWorkoutExercises";
+import { useGetWorkoutExercises } from "@/hooks/queries/workouts";
 import { useParams, useSearchParams } from "next/navigation";
 import { FC } from "react";
 
 const Workouts: FC = () => {
     const workoutId = useParams()?.id as string;
     const workoutTitle = useSearchParams().get('workout_title');
-    const { data: exercises, error } = useGetWorkoutExercises(workoutId);
+    const { data: exercises = [], error, isLoading } = useGetWorkoutExercises(workoutId);
+
+    if (isLoading) {
+        return <div className="p-8 text-center">Загрузка упражнений...</div>;
+    }
 
     if (error) {
         return (

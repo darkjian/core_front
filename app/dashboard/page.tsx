@@ -1,6 +1,6 @@
 'use client';
 import WorkoutMiniCard from "@/components/WorkoutMiniCard";
-import { useGetDailyWorkouts } from "@/hooks/useGetDailyWorkouts";
+import { useGetDailyWorkouts } from "@/hooks/queries/workouts";
 import { FC } from "react";
 
 function getCurrentDayOfWeek(): string {
@@ -21,8 +21,12 @@ const dayOfWeekOrder: Record<string, number> = {
 };
 
 const DashboardHome: FC = () => {
-    const { data: workouts, error } = useGetDailyWorkouts();
+    const { data: workouts, error, isLoading } = useGetDailyWorkouts();
     const currenWeekday = getCurrentDayOfWeek();
+
+    if (isLoading) {
+        return <div className="p-8 text-center">Загрузка...</div>;
+    }
 
     if (error) {
         return (

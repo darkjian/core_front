@@ -1,5 +1,5 @@
 'use client';
-import { useGetProgramWorkouts } from '@/hooks/useGetProgramWorkouts';
+import { useGetProgramWorkouts } from '@/hooks/queries/workouts';
 import { useParams } from 'next/navigation';
 import { FC } from 'react';
 
@@ -17,9 +17,9 @@ const dayNamesRu: Record<string, string> = {
 const ProgramPage: FC = () => {
     const params = useParams();
     const id = params?.id as string;
-    const { data, loading, error } = useGetProgramWorkouts(id);
+    const { data, isLoading, error } = useGetProgramWorkouts(id);
 
-    if (loading) return <div className="p-8 text-center">Загрузка...</div>;
+    if (isLoading) return <div className="p-8 text-center">Загрузка...</div>;
     if (error || !data) return <div>Ошибка загрузки</div>;
 
     const { program_name, workouts } = data;
