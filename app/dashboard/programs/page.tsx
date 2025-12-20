@@ -2,6 +2,7 @@
 
 import ProgramMiniCard from '@/components/ProgramMiniCard'
 import { ProgramsSkeleton } from '@/components/skeletons/ProgramsSkeleton'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useGetUserPrograms, useGetTemplatePrograms } from '@/hooks/queries'
 import { useProgramsStore } from '@/store'
 import type { Program } from '@/types'
@@ -53,30 +54,14 @@ const Programs: FC = () => {
 
   return (
     <>
-      <div className='flex flex-col items-center md:items-start'>
+      <div className='mb-2 flex flex-col items-center md:items-start'>
         <h3 className='text-foreground mb-5 text-2xl font-black md:text-3xl'>Программы</h3>
-        <div className='mb-4 flex gap-2'>
-          <button
-            onClick={() => setViewMode('my')}
-            className={`rounded px-4 py-2 transition-colors ${
-              viewMode === 'my'
-                ? 'bg-primary text-primary-foreground'
-                : 'border-border bg-muted text-foreground hover:bg-muted/80 border'
-            }`}
-          >
-            Мои программы
-          </button>
-          <button
-            onClick={() => setViewMode('templates')}
-            className={`rounded px-4 py-2 transition-colors ${
-              viewMode === 'templates'
-                ? 'bg-primary text-primary-foreground'
-                : 'border-border bg-muted text-foreground hover:bg-muted/80 border'
-            }`}
-          >
-            Шаблоны
-          </button>
-        </div>
+        <Tabs value={viewMode} onValueChange={(value) => setViewMode(value as 'my' | 'templates')}>
+          <TabsList>
+            <TabsTrigger value='my'>Мои программы</TabsTrigger>
+            <TabsTrigger value='templates'>Шаблоны</TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
       <div className='flex flex-col gap-3 md:items-start'>{listPrograms(programs)}</div>
     </>
