@@ -1,8 +1,7 @@
 'use client';
 import WorkoutMiniCard from "@/components/WorkoutMiniCard";
-import { listDailyWorkouts } from "@/services/workouts";
-import type { DailyWorkoutsResponse } from "@/types";
-import { useEffect, useState, FC } from "react";
+import { useGetDailyWorkouts } from "@/hooks/useGetDailyWorkouts";
+import { FC } from "react";
 
 function getCurrentDayOfWeek(): string {
     const date = new Date();
@@ -22,24 +21,8 @@ const dayOfWeekOrder: Record<string, number> = {
 };
 
 const DashboardHome: FC = () => {
-    const [workouts, setWorkouts] = useState<DailyWorkoutsResponse | null>(null);
-    const [error, setError] = useState<string>('');
+    const { data: workouts, error } = useGetDailyWorkouts();
     const currenWeekday = getCurrentDayOfWeek();
-
-    useEffect(() => {
-        async function fetchDailyWorkouts() {
-            try {
-                const data = await listDailyWorkouts();
-                setWorkouts(data);
-            }
-            catch (err) {
-                const errorMessage = err instanceof Error ? err.message : 'Ошибка загрузки тренировок';
-                setError(errorMessage);
-                console.error(err);
-            }
-        }
-        fetchDailyWorkouts();
-    }, []);
 
     if (error) {
         return (

@@ -1,8 +1,7 @@
 'use client';
-import { listProgramWorkouts } from '@/services/workouts';
-import type { ProgramData } from '@/types';
+import { useGetProgramWorkouts } from '@/hooks/useGetProgramWorkouts';
 import { useParams } from 'next/navigation';
-import { useEffect, useState, FC } from 'react';
+import { FC } from 'react';
 
 const dayOrder: string[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 const dayNamesRu: Record<string, string> = {
@@ -16,31 +15,12 @@ const dayNamesRu: Record<string, string> = {
 };
 
 const ProgramPage: FC = () => {
-    const params = useParams();   // теперь params обычный объект, await не нужен
-    const [data, setData] = useState<ProgramData | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
+    const params = useParams();
     const id = params?.id as string;
-    useEffect(() => {
-
-        async function fetchWorkouts() {
-            try {
-                const data = await listProgramWorkouts(id);
-                setData(data);
-                console.log(data);
-            }
-            catch (err) {
-                console.error('fetching workouts programs:', err instanceof Error ? err.message : err);
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        fetchWorkouts();
-    }, [id]);
-
+    const { data, loading, error } = useGetProgramWorkouts(id);
 
     if (loading) return <div className="p-8 text-center">Загрузка...</div>;
-    if (!data) return <div>Ошибка загрузки</div>;
+    if (error || !data) return <div>Ошибка загрузки</div>;
 
     const { program_name, workouts } = data;
 

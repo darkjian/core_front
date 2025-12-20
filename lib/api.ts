@@ -24,7 +24,7 @@ apiClient.interceptors.response.use(
     (response: AxiosResponse) => response,
     (error: AxiosError | Error) => {
         if (axios.isAxiosError(error)) {
-            handleErrorByStatus(error);
+            handleErrorByStatus(error as any);
             const errorMessage = error.response?.data?.error || error.message || 'Network error';
             return Promise.reject(new Error(errorMessage as string));
         }

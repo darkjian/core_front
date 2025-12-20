@@ -1,31 +1,12 @@
 'use client';
-import { listWorkoutExercises } from "@/services/workouts";
-import type { Exercise } from "@/types";
+import { useGetWorkoutExercises } from "@/hooks/useGetWorkoutExercises";
 import { useParams, useSearchParams } from "next/navigation";
-import { useEffect, useState, FC } from "react";
+import { FC } from "react";
 
 const Workouts: FC = () => {
     const workoutId = useParams()?.id as string;
     const workoutTitle = useSearchParams().get('workout_title');
-    const [exercises, setExercises] = useState<Exercise[]>([]);
-    const [error, setError] = useState<string>('');
-
-    useEffect(() => {
-
-        async function fetchWorkoutExercises() {
-            try {
-                const data = await listWorkoutExercises(workoutId);
-                setExercises(data);
-            }
-            catch (error) {
-                const errorMessage = error instanceof Error ? error.message : 'Ошибка загрузки упражнений';
-                setError(errorMessage);
-                console.error('fetching workout exercises:', error);
-            }
-        }
-
-        fetchWorkoutExercises();
-    }, []);
+    const { data: exercises, error } = useGetWorkoutExercises(workoutId);
 
     if (error) {
         return (
@@ -56,7 +37,7 @@ const Workouts: FC = () => {
             </div>
             <div className="flex flex-col md:items-start gap-3">
                 {exercises.map((exercise) => (
-                    <div>
+                    <div key={exercise.id}>
                         <span>{exercise.id}</span>
                         <span>{exercise.title}</span>
                     </div>
