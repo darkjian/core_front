@@ -32,10 +32,10 @@ const LoginForm: FC = () => {
   }
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-gray-50 p-4'>
+    <div className='bg-background flex min-h-screen items-center justify-center p-4'>
       <div className='w-full max-w-md'>
-        <div className='space-y-6 rounded-lg bg-white p-8 shadow-lg'>
-          <h1 className='text-center text-3xl font-extrabold text-gray-900'>Вход</h1>
+        <div className='border-border bg-card space-y-6 rounded-lg border p-8 shadow-lg'>
+          <h1 className='text-foreground text-center text-3xl font-extrabold'>Вход</h1>
 
           <form onSubmit={handleSubmit} className='space-y-4'>
             <input
@@ -43,7 +43,7 @@ const LoginForm: FC = () => {
               placeholder='Почта'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className='w-full rounded-md border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none'
+              className='border-input bg-background text-foreground placeholder:text-muted-foreground focus:ring-ring w-full rounded-md border px-4 py-2 transition-colors focus:ring-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50'
               disabled={isPending}
             />
             <input
@@ -51,25 +51,25 @@ const LoginForm: FC = () => {
               placeholder='Пароль'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className='w-full rounded-md border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none'
+              className='border-input bg-background text-foreground placeholder:text-muted-foreground focus:ring-ring w-full rounded-md border px-4 py-2 transition-colors focus:ring-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50'
               disabled={isPending}
             />
 
             <div className='flex items-center justify-between gap-3 pt-4'>
-              <Link href='/auth/register' className='font-medium text-indigo-600 transition hover:text-indigo-700'>
+              <Link href='/auth/register' className='text-primary hover:text-primary/80 font-medium transition'>
                 Регистрация
               </Link>
               <button
                 type='submit'
                 disabled={isPending}
-                className='rounded-md bg-indigo-600 px-6 py-2 font-medium text-white transition hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50'
+                className='bg-primary text-primary-foreground hover:bg-primary/90 focus:ring-ring focus:ring-offset-background rounded-md px-6 py-2 font-medium transition focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50'
               >
                 {isPending ? 'Вход...' : 'Войти'}
               </button>
             </div>
           </form>
 
-          {(error || fieldError) && <p className='py-4 text-center text-red-500'>{error?.message || fieldError}</p>}
+          {(error || fieldError) && <p className='text-destructive py-4 text-center'>{error?.message || fieldError}</p>}
         </div>
       </div>
     </div>

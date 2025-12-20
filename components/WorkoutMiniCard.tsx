@@ -25,16 +25,16 @@ const WorkoutMiniCard: FC<WorkoutMiniCardProps> = ({ workout, program, isToday =
 
   return (
     <Link
-      className={`min-w-xs rounded-2xl bg-white p-3 drop-shadow-lg`}
+      className='border-border bg-card hover:bg-muted min-w-xs rounded-2xl border p-3 drop-shadow-lg transition-colors'
       href={`/dashboard/workouts/${workout.id}?workout_title=${workout.title}`}
     >
       <div className='flex items-center justify-between'>
-        <span className='line-clamp-1 text-sm font-bold text-neutral-600'>{workout.title}</span>
-        <span className={`text-xs ${isToday ? 'text-indigo-600' : 'text-gray-500'}`}>
+        <span className='text-foreground line-clamp-1 text-sm font-bold'>{workout.title}</span>
+        <span className={`text-xs ${isToday ? 'text-primary' : 'text-muted-foreground'}`}>
           {isToday ? 'сегодня' : `${weekday}`}
         </span>
       </div>
-      <span className='line-clamp-1 text-xs text-gray-500'>{program}</span>
+      <span className='text-muted-foreground line-clamp-1 text-xs'>{program}</span>
     </Link>
   )
 }

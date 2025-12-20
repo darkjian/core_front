@@ -33,9 +33,9 @@ const DashboardHome: FC = () => {
     return (
       <>
         <div className='mb-5 flex flex-col items-center justify-between md:items-start'>
-          <span className='text-2xl font-black text-gray-700 md:text-3xl'>Тренировки</span>
+          <span className='text-foreground text-2xl font-black md:text-3xl'>Тренировки</span>
         </div>
-        <span className='flex justify-center pt-64 text-sm text-red-400'>ошибка подключения к серверу</span>
+        <span className='text-destructive flex justify-center pt-64 text-sm'>ошибка подключения к серверу</span>
       </>
     )
   }
@@ -52,9 +52,9 @@ const DashboardHome: FC = () => {
     return (
       <>
         <div className='mb-5 flex flex-col items-center justify-between md:items-start'>
-          <span className='text-2xl font-black text-gray-700 md:text-3xl'>Тренировки</span>
+          <span className='text-foreground text-2xl font-black md:text-3xl'>Тренировки</span>
         </div>
-        <span className='flex justify-center pt-64 text-sm text-gray-400'>тренировок нет</span>
+        <span className='text-muted-foreground flex justify-center pt-64 text-sm'>тренировок нет</span>
       </>
     )
   }
@@ -62,7 +62,7 @@ const DashboardHome: FC = () => {
   return (
     <>
       <div className='mb-5 flex flex-col items-center justify-between md:items-start'>
-        <span className='text-2xl font-black text-gray-700 md:text-3xl'>Тренировки</span>
+        <span className='text-foreground text-2xl font-black md:text-3xl'>Тренировки</span>
       </div>
       <div className='mb-5 flex flex-col gap-3 md:items-start'>
         {allWorkouts
@@ -72,7 +72,7 @@ const DashboardHome: FC = () => {
           ))}
       </div>
       <div className='mb-5 flex flex-col items-center justify-between md:items-start'>
-        <span className='text-sm text-gray-400 md:text-lg'>Предстоящие тренировки</span>
+        <span className='text-muted-foreground text-sm md:text-lg'>Предстоящие тренировки</span>
       </div>
       <div className='mb-5 flex flex-col gap-3 md:items-start'>
         {allWorkouts

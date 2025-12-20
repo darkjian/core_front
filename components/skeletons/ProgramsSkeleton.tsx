@@ -19,7 +19,7 @@ export const ProgramsSkeleton = () => {
       {/* Programs grid skeleton */}
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
         {Array.from({ length: 6 }).map((_, idx) => (
-          <div key={idx} className='space-y-3 rounded-lg border border-gray-200 bg-white p-4'>
+          <div key={idx} className='border-border bg-card space-y-3 rounded-lg border p-4'>
             {/* Card header */}
             <Skeleton className='h-6 w-3/4' />
 

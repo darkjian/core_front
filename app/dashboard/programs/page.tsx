@@ -34,8 +34,8 @@ const Programs: FC = () => {
   if (error) {
     return (
       <>
-        <h3 className='mb-5 text-2xl font-black text-gray-700 md:text-3xl'>Программы тренировок</h3>
-        <span className='flex justify-center pt-64 text-sm text-red-400'>ошибка подключения к серверу</span>
+        <h3 className='text-foreground mb-5 text-2xl font-black md:text-3xl'>Программы тренировок</h3>
+        <span className='text-destructive flex justify-center pt-64 text-sm'>ошибка подключения к серверу</span>
       </>
     )
   }
@@ -43,8 +43,10 @@ const Programs: FC = () => {
   if (programs.length === 0) {
     return (
       <>
-        <h3 className='mb-5 text-2xl font-black text-gray-700 md:text-3xl'>Программы тренировок</h3>
-        <span className='flex justify-center pt-64 text-sm text-gray-400'>у вас пока нет созданных программ</span>
+        <h3 className='text-foreground mb-5 text-2xl font-black md:text-3xl'>Программы тренировок</h3>
+        <span className='text-muted-foreground flex justify-center pt-64 text-sm'>
+          у вас пока нет созданных программ
+        </span>
       </>
     )
   }
@@ -52,20 +54,24 @@ const Programs: FC = () => {
   return (
     <>
       <div className='flex flex-col items-center md:items-start'>
-        <h3 className='mb-5 text-2xl font-black text-gray-700 md:text-3xl'>Программы</h3>
+        <h3 className='text-foreground mb-5 text-2xl font-black md:text-3xl'>Программы</h3>
         <div className='mb-4 flex gap-2'>
           <button
             onClick={() => setViewMode('my')}
-            className={`rounded px-4 py-2 ${
-              viewMode === 'my' ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            className={`rounded px-4 py-2 transition-colors ${
+              viewMode === 'my'
+                ? 'bg-primary text-primary-foreground'
+                : 'border-border bg-muted text-foreground hover:bg-muted/80 border'
             }`}
           >
             Мои программы
           </button>
           <button
             onClick={() => setViewMode('templates')}
-            className={`rounded px-4 py-2 ${
-              viewMode === 'templates' ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            className={`rounded px-4 py-2 transition-colors ${
+              viewMode === 'templates'
+                ? 'bg-primary text-primary-foreground'
+                : 'border-border bg-muted text-foreground hover:bg-muted/80 border'
             }`}
           >
             Шаблоны

@@ -21,14 +21,14 @@ export const WorkoutTimer: FC<WorkoutTimerProps> = ({ seconds, isRunning }) => {
       <div className='relative h-40 w-40'>
         {/* Фоновый круг */}
         <svg className='absolute inset-0 h-full w-full -rotate-90 transform' viewBox='0 0 100 100'>
-          <circle cx='50' cy='50' r='45' fill='none' stroke='#e5e7eb' strokeWidth='2' />
+          <circle cx='50' cy='50' r='45' fill='none' stroke='hsl(var(--border))' strokeWidth='2' />
           {/* Прогресс круг */}
           <circle
             cx='50'
             cy='50'
             r='45'
             fill='none'
-            stroke={isRunning ? '#4f46e5' : '#6b7280'}
+            stroke={isRunning ? 'hsl(var(--primary))' : 'hsl(var(--muted-foreground))'}
             strokeWidth='2'
             strokeDasharray={circumference}
             strokeDashoffset={offset}
@@ -39,7 +39,7 @@ export const WorkoutTimer: FC<WorkoutTimerProps> = ({ seconds, isRunning }) => {
 
         {/* Текст внутри круга */}
         <div className='absolute inset-0 flex flex-col items-center justify-center'>
-          <div className='text-4xl font-bold text-gray-900'>{formatTime(seconds)}</div>
+          <div className='text-foreground text-4xl font-bold'>{formatTime(seconds)}</div>
         </div>
       </div>
     </div>
