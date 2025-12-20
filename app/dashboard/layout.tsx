@@ -4,6 +4,7 @@ import { BicepsFlexed, Home, Settings, User } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { FC, ReactNode } from 'react'
+import ThemeChanger from '@/components/ThemeChanger'
 
 interface NavItem {
   href: string
@@ -72,6 +73,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
         <div className='pb-16 md:pb-0 md:pl-64'>
           <main className='mx-auto max-w-7xl px-4 py-8 transition-all duration-300 ease-in-out sm:px-6 lg:px-8'>
             {children}
+            <ThemeChanger />
           </main>
         </div>
       </div>
