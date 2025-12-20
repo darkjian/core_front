@@ -98,8 +98,19 @@ export const queryClient = new QueryClient({
 
 ### Структура store/
 
-**Правило:** Один файл = одна логическая сущность
+**Правило:** Один файл = одна сущность/модуль
 
+```
+store/
+├── user.ts          # User данные (с persist в localStorage)
+├── programs.ts      # Programs viewMode, filters
+├── auth.ts          # Auth форм состояния (login, register)
+└── index.ts
+```
+
+### Примеры
+
+**User store (с сохранением в localStorage):**
 ```typescript
 // store/user.ts
 export const useUserStore = create<UserStore>()(
@@ -107,7 +118,6 @@ export const useUserStore = create<UserStore>()(
     (set) => ({
       user: null,
       isAuthenticated: false,
-
       setUser: (user) => set({ user, isAuthenticated: true }),
       logout: () => set({ user: null, isAuthenticated: false }),
     }),
@@ -116,20 +126,64 @@ export const useUserStore = create<UserStore>()(
 );
 ```
 
+**Programs store (состояния программ):**
+```typescript
+// store/programs.ts
+export const useProgramsStore = create<ProgramsStore>((set) => ({
+  viewMode: 'my',
+  setViewMode: (mode) => set({ viewMode: mode }),
+}));
+```
+
+**Auth store (состояние форм аутентификации):**
+```typescript
+// store/auth.ts
+export const useLoginFormStore = create<LoginFormState>((set) => ({
+  email: '',
+  password: '',
+  fieldError: '',
+  setEmail: (email) => set({ email }),
+  setPassword: (password) => set({ password }),
+  setFieldError: (error) => set({ fieldError: error }),
+  reset: () => set({ email: '', password: '', fieldError: '' }),
+}));
+
+export const useRegisterFormStore = create<RegisterFormState>((set) => ({
+  email: '',
+  password: '',
+  fieldError: '',
+  setEmail: (email) => set({ email }),
+  setPassword: (password) => set({ password }),
+  setFieldError: (error) => set({ fieldError: error }),
+  reset: () => set({ email: '', password: '', fieldError: '' }),
+}));
+```
+
 ### Использование в компонентах
 
 ```typescript
 'use client';
-import { useUserStore } from '@/store';
+import { useUserStore, useProgramsStore, useLoginFormStore } from '@/store';
 
-export function Profile() {
+export function MyComponent() {
+  // User данные
   const user = useUserStore((state) => state.user);
-  const logout = useUserStore((state) => state.logout);
+
+  // Programs состояние
+  const viewMode = useProgramsStore((state) => state.viewMode);
+  const setViewMode = useProgramsStore((state) => state.setViewMode);
+
+  // Form состояние
+  const email = useLoginFormStore((state) => state.email);
+  const setEmail = useLoginFormStore((state) => state.setEmail);
 
   return (
     <div>
       <h1>{user?.email}</h1>
-      <button onClick={logout}>Выход</button>
+      <button onClick={() => setViewMode('templates')}>
+        View: {viewMode}
+      </button>
+      <input value={email} onChange={(e) => setEmail(e.target.value)} />
     </div>
   );
 }
@@ -139,22 +193,34 @@ export function Profile() {
 
 | Задача | Использовать |
 |--------|-------------|
-| Загрузить данные с API | useQuery из hooks/queries/ |
-| Отправить данные на сервер | useMutation (future) в hooks/mutations/ |
-| Хранить данные юзера | useUserStore |
-| Темная тема / язык | useUIStore (future) |
-| Состояние формы | useState в компоненте или custom hook |
-| Состояние меню | useState в компоненте |
+| Загрузить данные с API | `useQuery` из `hooks/queries/` |
+| Отправить данные на сервер | `useMutation` из `hooks/mutations/` |
+| Состояние форм | `useLoginFormStore`, `useRegisterFormStore` из `store/auth.ts` |
+| Состояние programs (viewMode, filters) | `useProgramsStore` из `store/programs.ts` |
+| Хранить данные юзера | `useUserStore` из `store/user.ts` (persisted) |
+| Добавить новое UI состояние | Создать новый файл в `store/` по имени модуля |
+| Кэширование между переходами | TanStack Query (автоматически) |
+| Синхронизация между вкладками | TanStack Query (автоматически) |
 
 ## Статус миграции
 
-✅ **Полностью переведено на TanStack Query:**
+### TanStack Query (API данные)
+✅ **Полностью переведено:**
 - Dashboard (тренировки) - `hooks/queries/workouts.ts`
 - Programs (программы) - `hooks/queries/programs.ts`
 - Workouts detail (упражнения) - `hooks/queries/workouts.ts`
 - Auth forms - `hooks/mutations/auth.ts`
 
-❌ **Прямых импортов сервисов больше нет в компонентах**
+### Zustand (Клиентское состояние)
+✅ **Организовано по модулям:**
+- Programs состояние - `store/programs.ts` (viewMode)
+- Auth формы - `store/auth.ts` (login, register form state)
+- Данные юзера - `store/user.ts` (с persist в localStorage)
+
+### Итого:
+✅ **Нет useState в компонентах** (только для временных UI элементов типа dropdown)
+✅ **Нет прямых импортов сервисов в компонентах**
+✅ **Единая система управления состоянием**
 
 ## Расширение
 

@@ -2,8 +2,9 @@
 
 import ProgramMiniCard from "@/components/ProgramMiniCard";
 import { useGetUserPrograms, useGetTemplatePrograms } from "@/hooks/queries";
+import { useProgramsStore } from "@/store";
 import type { Program } from "@/types";
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode } from "react";
 
 const listPrograms = (programs: Program[]): ReactNode[] => {
     return programs.map((program) => (
@@ -12,7 +13,8 @@ const listPrograms = (programs: Program[]): ReactNode[] => {
 }
 
 const Programs: FC = () => {
-    const [viewMode, setViewMode] = useState<'my' | 'templates'>('my');
+    const viewMode = useProgramsStore((state) => state.viewMode);
+    const setViewMode = useProgramsStore((state) => state.setViewMode);
 
     // TanStack Query автоматически кэширует результаты
     const userPrograms = useGetUserPrograms();
