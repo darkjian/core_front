@@ -37,10 +37,7 @@ const ExerciseDetail: FC = () => {
   return (
     <>
       {/* Заголовок */}
-      <div className='mb-8 flex flex-col items-center md:items-start'>
-        <h1 className='text-foreground text-3xl font-black md:text-4xl'>Упражнение</h1>
-        <p className='text-muted-foreground mt-2 text-sm'>ID: {exerciseId}</p>
-      </div>
+      <h1 className='text-foreground mb-8 text-center text-3xl font-black md:text-left md:text-4xl'>Упражнение</h1>
 
       {/* Видео/картинка */}
       <WorkoutVideo title='Упражнение' />
@@ -83,7 +80,7 @@ const ExerciseDetail: FC = () => {
         <div className='flex flex-col gap-6'>
           {/* Exercise Info */}
           <section>
-            <h2 className='text-foreground mb-4 text-2xl font-bold'>Информация об упражнении</h2>
+            <h2 className='text-foreground mb-4 text-2xl font-black'>Информация об упражнении</h2>
             <div className='border-border bg-muted rounded-lg border p-6'>
               <p className='text-muted-foreground'>Здесь будет информация об упражнении. Нужно создать:</p>
               <ul className='text-muted-foreground mt-3 list-inside list-disc space-y-2'>
@@ -102,7 +99,7 @@ const ExerciseDetail: FC = () => {
 
           {/* Session Parameters */}
           <section>
-            <h2 className='text-foreground mb-4 text-2xl font-bold'>Параметры сессии</h2>
+            <h2 className='text-foreground mb-4 text-2xl font-black'>Параметры сессии</h2>
             <div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
               <div className='border-primary/30 bg-primary/10 rounded-lg border p-4'>
                 <p className='text-primary text-sm font-medium'>Сетов</p>
@@ -117,7 +114,7 @@ const ExerciseDetail: FC = () => {
 
           {/* Description */}
           <section>
-            <h2 className='text-foreground mb-4 text-2xl font-bold'>Описание</h2>
+            <h2 className='text-foreground mb-4 text-2xl font-black'>Описание</h2>
             <div className='border-border bg-muted rounded-lg border p-6'>
               <p className='text-muted-foreground leading-relaxed'>Описание упражнения будет загружено с сервера...</p>
             </div>

@@ -35,7 +35,7 @@ const Programs: FC = () => {
   if (error) {
     return (
       <>
-        <h3 className='text-foreground mb-5 text-2xl font-black md:text-3xl'>Программы тренировок</h3>
+        <h1 className='text-foreground mb-8 text-center text-3xl font-black md:text-left md:text-4xl'>Программы</h1>
         <span className='text-destructive flex justify-center pt-64 text-sm'>ошибка подключения к серверу</span>
       </>
     )
@@ -44,7 +44,7 @@ const Programs: FC = () => {
   if (programs.length === 0) {
     return (
       <>
-        <h3 className='text-foreground mb-5 text-2xl font-black md:text-3xl'>Программы тренировок</h3>
+        <h1 className='text-foreground mb-8 text-center text-3xl font-black md:text-left md:text-4xl'>Программы</h1>
         <span className='text-muted-foreground flex justify-center pt-64 text-sm'>
           у вас пока нет созданных программ
         </span>
@@ -54,8 +54,8 @@ const Programs: FC = () => {
 
   return (
     <>
-      <div className='mb-2 flex flex-col items-center md:items-start'>
-        <h3 className='text-foreground mb-5 text-2xl font-black md:text-3xl'>Программы</h3>
+      <h1 className='text-foreground mb-8 text-center text-3xl font-black md:text-left md:text-4xl'>Программы</h1>
+      <div className='mb-6 flex justify-center md:justify-start'>
         <Tabs value={viewMode} onValueChange={(value) => setViewMode(value as 'my' | 'templates')}>
           <TabsList>
             <TabsTrigger value='my'>Мои программы</TabsTrigger>
