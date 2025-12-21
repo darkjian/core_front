@@ -33,7 +33,7 @@ export const ThemeChanger = () => {
       className='absolute top-4 right-4'
       aria-label='Toggle theme'
     >
-      {isDark ? <Sun className='h-4 w-4 text-yellow-500' /> : <Moon className='h-4 w-4 text-slate-700' />}
+      {isDark ? <Moon className='h-4 w-4 text-white' /> : <Sun className='h-4 w-4 text-yellow-500' />}
     </Switch>
   )
 }
