@@ -73,7 +73,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
         <div className='pb-16 md:pb-0 md:pl-64'>
           <main className='mx-auto max-w-7xl px-4 py-8 transition-all duration-300 ease-in-out sm:px-6 lg:px-8'>
             {children}
-            <ThemeChanger />
+            <ThemeChanger className='absolute top-4 right-4' />
           </main>
         </div>
       </div>

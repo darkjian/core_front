@@ -1,3 +1,4 @@
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
 import type { FC } from 'react'
 import type { Program } from '@/types'
@@ -16,13 +17,14 @@ const formatDate = (date: string | Date): string => {
 
 const ProgramMiniCard: FC<ProgramMiniCardProps> = ({ program }) => {
   return (
-    <Link
-      className='group transition-color border-border bg-card hover:bg-muted flex min-w-xs flex-col rounded-xl border p-3 drop-shadow-lg duration-300'
-      href={`/dashboard/programs/${program.id}`}
-    >
-      <span className='text-foreground group-hover:text-primary line-clamp-1 text-sm font-bold'>{program.title}</span>
-      <span className='text-muted-foreground line-clamp-1 text-xs'>{program.description}</span>
-      <span className='text-muted-foreground/60 mt-2 text-xs'>{formatDate(program.created_at)}</span>
+    <Link href={`/dashboard/programs/${program.id}`} className='w-full'>
+      <Card className='group hover:bg-muted cursor-pointer'>
+        <CardHeader>
+          <CardTitle className='group-hover:text-primary line-clamp-1'>{program.title}</CardTitle>
+          <CardDescription className='line-clamp-1'>{program.description}</CardDescription>
+        </CardHeader>
+        <CardContent className='text-muted-foreground/60 text-xs'>{formatDate(program.created_at)}</CardContent>
+      </Card>
     </Link>
   )
 }

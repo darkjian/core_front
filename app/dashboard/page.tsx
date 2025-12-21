@@ -32,9 +32,7 @@ const DashboardHome: FC = () => {
   if (error) {
     return (
       <>
-        <div className='mb-5 flex flex-col items-center justify-between md:items-start'>
-          <span className='text-foreground text-2xl font-black md:text-3xl'>Тренировки</span>
-        </div>
+        <h1 className='text-foreground mb-8 text-center text-3xl font-black md:text-left md:text-4xl'>Тренировки</h1>
         <span className='text-destructive flex justify-center pt-64 text-sm'>ошибка подключения к серверу</span>
       </>
     )
@@ -51,9 +49,7 @@ const DashboardHome: FC = () => {
   if (allWorkouts.length === 0) {
     return (
       <>
-        <div className='mb-5 flex flex-col items-center justify-between md:items-start'>
-          <span className='text-foreground text-2xl font-black md:text-3xl'>Тренировки</span>
-        </div>
+        <h1 className='text-foreground mb-8 text-center text-3xl font-black md:text-left md:text-4xl'>Тренировки</h1>
         <span className='text-muted-foreground flex justify-center pt-64 text-sm'>тренировок нет</span>
       </>
     )
@@ -61,9 +57,7 @@ const DashboardHome: FC = () => {
 
   return (
     <>
-      <div className='mb-5 flex flex-col items-center justify-between md:items-start'>
-        <span className='text-foreground text-2xl font-black md:text-3xl'>Тренировки</span>
-      </div>
+      <h1 className='text-foreground mb-8 text-center text-3xl font-black md:text-left md:text-4xl'>Тренировки</h1>
       <div className='mb-5 flex flex-col gap-3 md:items-start'>
         {allWorkouts
           .filter((workout) => workout.day_of_week === currenWeekday)
