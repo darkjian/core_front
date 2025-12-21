@@ -17,8 +17,8 @@ const formatDate = (date: string | Date): string => {
 
 const ProgramMiniCard: FC<ProgramMiniCardProps> = ({ program }) => {
   return (
-    <Link href={`/dashboard/programs/${program.id}`}>
-      <Card className='group hover:bg-muted cursor-pointer transition-colors'>
+    <Link href={`/dashboard/programs/${program.id}`} className='w-full'>
+      <Card className='group hover:bg-muted cursor-pointer'>
         <CardHeader>
           <CardTitle className='group-hover:text-primary line-clamp-1'>{program.title}</CardTitle>
           <CardDescription className='line-clamp-1'>{program.description}</CardDescription>

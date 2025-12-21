@@ -14,7 +14,7 @@ const ExerciseCard: FC<ExerciseCardProps> = ({ exercise, workoutId }) => {
   const { sets, reps } = exercise.session_parameters
 
   return (
-    <Link href={`/dashboard/workouts/${workoutId}/exercises/${exercise.id}`}>
+    <Link href={`/dashboard/workouts/${workoutId}/exercises/${exercise.id}`} className='w-full'>
       <Card className='cursor-pointer transition-shadow hover:shadow-lg'>
         <CardHeader>
           <CardTitle>{exercise.title}</CardTitle>

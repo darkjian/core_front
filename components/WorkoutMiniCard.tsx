@@ -25,8 +25,8 @@ const WorkoutMiniCard: FC<WorkoutMiniCardProps> = ({ workout, program, isToday =
   const weekday = russianDaysShort[dayIndex]
 
   return (
-    <Link href={`/dashboard/workouts/${workout.id}?workout_title=${workout.title}`}>
-      <Card className='hover:bg-muted cursor-pointer transition-colors'>
+    <Link href={`/dashboard/workouts/${workout.id}?workout_title=${workout.title}`} className='w-full'>
+      <Card className='hover:bg-muted cursor-pointer'>
         <CardHeader>
           <div className='flex items-center justify-between'>
             <CardTitle className='line-clamp-1'>{workout.title}</CardTitle>
