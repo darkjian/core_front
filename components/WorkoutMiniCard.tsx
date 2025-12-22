@@ -1,8 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
 import type { FC } from 'react'
-import { DayOfWeek } from '@/types'
-import type { Workout, RussianDayOfWeekName } from '@/types'
+import type { Workout } from '@/types'
+import { daysOfWeek } from '@/constants/days'
 
 interface WorkoutMiniCardProps {
   workout: Workout
@@ -10,29 +10,8 @@ interface WorkoutMiniCardProps {
   isToday?: boolean
 }
 
-const dayNameMap: Record<string, DayOfWeek> = {
-  monday: DayOfWeek.Monday,
-  tuesday: DayOfWeek.Tuesday,
-  wednesday: DayOfWeek.Wednesday,
-  thursday: DayOfWeek.Thursday,
-  friday: DayOfWeek.Friday,
-  saturday: DayOfWeek.Saturday,
-  sunday: DayOfWeek.Sunday,
-}
-
-const russianDaysShort: Record<DayOfWeek, RussianDayOfWeekName> = {
-  [DayOfWeek.Sunday]: 'Вс',
-  [DayOfWeek.Monday]: 'Пн',
-  [DayOfWeek.Tuesday]: 'Вт',
-  [DayOfWeek.Wednesday]: 'Ср',
-  [DayOfWeek.Thursday]: 'Чт',
-  [DayOfWeek.Friday]: 'Пт',
-  [DayOfWeek.Saturday]: 'Сб',
-}
-
 const WorkoutMiniCard: FC<WorkoutMiniCardProps> = ({ workout, program, isToday = false }) => {
-  const dayIndex = dayNameMap[workout.day_of_week.toLowerCase()]
-  const weekday = russianDaysShort[dayIndex]
+  const weekday = daysOfWeek[workout.day_of_week.toLowerCase() as keyof typeof daysOfWeek]
 
   return (
     <Link href={`/dashboard/workouts/${workout.id}?workout_title=${workout.title}`} className='w-full'>

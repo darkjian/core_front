@@ -79,18 +79,3 @@ export interface AuthResponse {
   token?: string
   message?: string
 }
-
-/**
- * Day of week types
- */
-export enum DayOfWeek {
-  Sunday,
-  Monday,
-  Tuesday,
-  Wednesday,
-  Thursday,
-  Friday,
-  Saturday,
-}
-
-export type RussianDayOfWeekName = 'Вс' | 'Пн' | 'Вт' | 'Ср' | 'Чт' | 'Пт' | 'Сб'
