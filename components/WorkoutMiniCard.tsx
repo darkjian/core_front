@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import Link from 'next/link'
 import type { FC } from 'react'
 import type { Workout } from '@/types'
+import { daysOfWeek } from '@/constants/days'
 
 interface WorkoutMiniCardProps {
   workout: Workout
@@ -9,20 +10,8 @@ interface WorkoutMiniCardProps {
   isToday?: boolean
 }
 
-const daysOfWeekMap: Record<string, number> = {
-  monday: 1,
-  tuesday: 2,
-  wednesday: 3,
-  thursday: 4,
-  friday: 5,
-  saturday: 6,
-  sunday: 0,
-}
-const russianDaysShort: string[] = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
-
 const WorkoutMiniCard: FC<WorkoutMiniCardProps> = ({ workout, program, isToday = false }) => {
-  const dayIndex = daysOfWeekMap[workout.day_of_week.toLowerCase()]
-  const weekday = russianDaysShort[dayIndex]
+  const weekday = daysOfWeek[workout.day_of_week.toLowerCase() as keyof typeof daysOfWeek]
 
   return (
     <Link href={`/dashboard/workouts/${workout.id}?workout_title=${workout.title}`} className='w-full'>
